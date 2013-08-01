@@ -1,0 +1,48 @@
+extends layout
+
+block content
+  | <style>
+  | #wrap
+  |{
+  |  min-height: 100%; 
+  |  height : auto !important;
+  | height: 100%;
+  |}
+  | #main
+  |{
+  |    overflow:auto;
+  |    padding-top: 40px; /* 60px to make the container go all the way to the bottom of the topbar */    
+  |    padding-bottom:70px; /* this needs to be bigger than footer height*/  
+  |}
+  | html,body
+  |{
+  |     height:100%;
+  |}
+  | </style>
+
+  h1= title
+  div(class="navbar navbar-fixed-top")
+     div(class="navbar-inner")
+        div(class="container")
+           button(type="button",class="btn btn-navbar",data-toggle="collapse", data-target=".nav-collapse")
+                  span(class="icon-bar")
+                  span(class="icon-bar")
+                  span(class="icon-bar")
+           div(class="nav-collapse collapse")
+              ul(class="nav")
+                li
+                  a(href="/#") Home
+                li(class="dropdown")
+                  a(class="dropdown-toggle",data-toggle="dropdown",href="#about") Operation Monitor
+                     b(class="caret")
+                li
+                  a(href="#contact") Quality Monitor
+              a(class="brand") Welcome ${username}  
+  div(id="wrap")
+   div(id="main" ,class="container clear-top")   
+    div(class = "container")
+     div(class="row-fluid")
+       div(ng-controller='AppCtrl' ,class="span12")
+        |<ul class="breadcrumb"><li ng-repeat='bc in breadcrumbs' ng-class="{\'active\': {{$last}} }"><a ng-click="unregisterBreadCrumb( $index )" ng-href="{{bc.href}}">{{bc.label}}</a><span class="divider" ng-show="! $last">|</span></li></ul>
+        | <ul id="home" bread-crumbs></ul>
+    div(ng-view) 

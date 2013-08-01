@@ -1,0 +1,202 @@
+|<style>
+|.axis path,
+|.axis line {
+|  fill: none;
+|  stroke: #000;
+|  shape-rendering: crispEdges;
+|}
+
+|.x.axis path {
+|  stroke: #000;
+|}
+
+|.line {
+|  fill: none;
+|  stroke: steelblue;
+|  stroke-width: 2 px;
+|}
+|{  font-size: 11px;
+| pointer-events: none;
+|}
+
+|text.parent {
+|  fill: #1f77b4;
+|}
+
+|circle {
+|  fill: #ccc;
+|  stroke: #999;
+|  pointer-events: all;
+|}
+
+|circle.parent {
+|  fill: #1f77b4;
+|  fill-opacity: .1;
+|  stroke: steelblue;
+|}
+
+|circle.parent:hover {
+|  stroke: #ff7f0e;
+|  stroke-width: .5px;
+|}
+
+|circle.child {
+|  pointer-events: none;
+|}
+|     .legend {
+|position : absolute;
+|left: 200px;
+|top: 80px;
+
+|}
+
+|.node rect {
+|  cursor: pointer;
+|  fill: #fff;
+|  fill-opacity: .5;
+|  stroke: #3182bd;
+|  stroke-width: 1.5px;
+|}
+
+|.node text {
+|  font: 10px sans-serif;
+|  pointer-events: none;
+|}
+
+
+|     line.link {
+|        stroke: #999;
+|        stroke-opacity: .6;
+|      }
+|      line.link_2 {
+|        stroke: #000;
+|        stroke-opacity: .6;
+|        stroke-dasharray: 0,2 1;
+|      }
+|          line.link_3 {
+|        stroke: #FFF;
+|        stroke-opacity: .6;
+|        stroke-dasharray: 0,2 1;
+|.node.a { fill: #1f77b4; }
+|.node.b { fill: #ff7f0e; }
+|.node.c { fill: #2ca02c; }
+|      }
+|</style>
+|<div class="container">
+
+|<h3> {{job_list[0].task}} ID {{job_list[0].id}} Status {{job_list[0].status}}  <h3>
+
+
+
+
+|<h1>{{job.name}}</h1>
+
+
+
+|<div class="row-fluid">
+|<div class="span12">
+
+|    	<div class="btn-group" >
+|			  <button type="button" class="btn btn-primary" ng-model="type_task" btn-radio="'task'" >Task</button>
+|			  <button type="button" class="btn btn-primary" ng-model="type_task" btn-radio="'status'" >Status</button>
+|		</div>  
+|    	<div class="btn-group" >
+|       			  <button type="button" class="btn  " ng-model="selection" btn-radio="'pie_chart'" >Pie Chart</button>
+|			          <button type="button" class="btn " ng-model="selection" btn-radio="'bar_chart'" >Bar Chart</button>
+|                     <button type="button" class="btn " ng-model="selection" btn-radio="'evolution'" >Evolution </button>
+|                     <button type="button" class="btn " ng-model="selection" btn-radio="'zoom'" >Zoom </button>
+|                     <button type="button" class="btn " ng-model="selection" btn-radio="'force_tree'" >Force </button>
+
+|   	  </div>		
+|       <div data-toggle="buttons-radio" ng-switch on="selection" >
+|                  <span ng-switch-when="bar_chart"> <sc-Visualization2 data="job_list.slice(1,job_list.length)" type="type_task" counter="counter"></sc-Visualization2>  </span>
+|                  <span ng-switch-when="pie_chart"> <sc-Visualization1 data="job_list.slice(1,job_list.length)" type="type_task" counter="counter"></sc-Visualization1> </span>
+|                  <span ng-switch-when="evolution"><sc-Visualization3 data="job_list.slice(1,job_list.length)" type="type_task" counter="counter" ></sc-Visualization3> </span>
+|                  <span ng-switch-when="zoom"><sc-Visualization4 data="job_list" type="type_task" counter="counter" ></sc-Visualization4> </span>
+|                  <span ng-switch-when="force_tree"><sc-Visualization5 data="job_list" type="type_task" counter="counter" ></sc-Visualization5> </span>
+
+|                  <span ng-switch-default>default  </span>
+|       
+|   	  </div>
+
+|</div>
+|</div>
+
+
+|  <!-- filter section --->
+  
+|     <div class="row-fluid">
+|    <div class="span12">
+|      <!--Sidebar content-->
+|    Filter Any Column <input ng-model="query.$"> 
+ 
+|      Status filter
+
+|	<select ng-model="status_filter" ng-options="job.status as job.status for job in job_list.slice(1,job_list.length) | unique:'status'">
+|   <option value="">-- chose status --</option>
+|  // unique options from the categories
+|	</select>
+|	Task filter    
+|		<select ng-model="task_filter" ng-options="job.task as job.task group by  'pixelsim' for job in job_list.slice(1,job_list.length) | unique:'task'">
+| 		 <option value="">-- chose task --</option>  
+|	</select> <br>
+|    </div>
+|   </div>     
+|       <!-- filter section end here---> 
+|       <!-- data table section --->
+|   <div class="row-fluid">
+|    <div class="span12">
+| 	<table class="table table-striped table-condensed table-hover">	
+| 		  <thead>
+|    <tr>
+|     <th><a href="" ng-click="orderProp = 'id'; reverse=!reverse">ID</a></th>
+|     <th><a href="" ng-click="orderProp = 'task'; reverse=!reverse">Name</a></th>
+|     <th>Jobs</th>
+|     <th><a href="" ng-click="orderProp = 'status'; reverse=!reverse">Status</a></th>
+|     <th>QC</th>
+|     <th><a href="" ng-click="orderProp = 'ts_created'; reverse=!reverse">Created</a></th>
+|      <th><a href="" ng-click="orderProp = 'ts_started'; reverse=!reverse">Started</a></th>
+|       <th><a href="" ng-click="orderProp = 'ts_ended'; reverse=!reverse">Ended</a></th>
+|     
+|      <th>One level subjobs</th>
+     
+|    </tr>
+|  </thead>
+|    <tbody>
+|        <tr ng-repeat="job in job_list.slice(1,job_list.length)  | filter:query |filter:status_filter | filter:task_filter | orderBy:orderProp:reverse" ng-class="{ error: (job.status == 'FAILED') }">
+|          <td>{{job.id}}</td>
+|          <td><p>{{job.task}}</p>  </td>
+|          <td><p>{{job.nbr}}</p></td>
+|          <td> <p>{{job.status}}</p>   </td>
+|          <td><p>not yet</p></td>
+|         <td> <p>{{job.ts_created | date:'medium'}}</p>   </td>
+|           <td> <p>{{job.ts_started | date:'medium'}}</p>   </td>
+|           <td> <p>{{job.ts_ended | date:'medium'}}</p>   </td>
+
+          
+|         <td> <a ng-show="job.nbr > 0"  href="#/detailed_view/{{job.id}}" class="btn btn-primary"><i   class="icon-pencil"></i></a> </td>
+         
+|        </tr>
+|    </tbody>  
+|  </table>
+
+|     <p>{{currentPage}}x</p>
+|     <div class="pagination pull-left">
+|                            <ul>
+|                              <li ng-class="{disabled: currentPage == 0}">
+|                                    <a href ng-click="prevPage()">« Prev</a>
+|                                </li>
+|                                   <li ng-repeat="n in [] | range:numberOfPages()" ng-class="{active: $index == currentPage}" ng-click="setPage()" ><a href="" ng-bind="$index + 1">1</a></li>
+|                               <li ng-class="{disabled: currentPage >= numberOfPages()-1}">
+|                                    <a href ng-click="nextPage()">Next »</a>
+|                                </li>
+|                         
+|                            </ul>
+
+|                        </div>
+   
+|    </div>
+|  </div>
+|   <!-- data table section end here--->
+   
+|</div>

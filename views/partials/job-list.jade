@@ -1,0 +1,121 @@
+|   <style>
+        
+|        .axis path, .axis line {
+|            fill: none;
+|            stroke: black;
+|            shape-rendering: crispEdges;
+|        }
+|        .axis path{
+|            fill: none;
+|            stroke: #000;
+|        }
+|        .bar {
+|            fill: steelblue;
+|        }
+|        .arc path {
+|  stroke: #fff;
+|}
+|    </style>
+| <div class="container">
+
+|<!-- plot section --->
+|   <div class="row-fluid">
+|    <div class="span12">   
+|    	<div class="btn-group" >
+|			  <button type="button" class="btn btn-primary" ng-model="type_task" btn-radio="'task'" >Task</button>
+|			  <button type="button" class="btn btn-primary" ng-model="type_task" btn-radio="'status'" >Status</button>
+             
+|		</div>  
+|    	<div class="btn-group" >
+|       			  <button type="button" class="btn  " ng-model="selection" btn-radio="'pie_chart'" >Pie Chart</button>
+|			      <button type="button" class="btn " ng-model="selection" btn-radio="'bar_chart'" >Bar Chart</button>
+
+|   	  </div>
+
+|       <div data-toggle="buttons-radio" ng-switch on="selection" >
+
+|                 <span ng-switch-when="bar_chart"> <sc-Visualization2 data="filteredData" type="type_task" ></sc-Visualization2>  </span>
+|                  <span ng-switch-when="pie_chart"> <sc-Visualization1 data="filteredData" type="type_task" counter="counter"></sc-Visualization1> </span>
+
+|                  <span ng-switch-default>default  </span>
+|       
+|   	  </div>
+
+|	 </div> 
+|   </div>
+|  <!-- plot section end here--->
+  
+|  <!-- filter section --->
+  
+|     <div class="row-fluid">
+|    <div class="span12">
+|      <!--Sidebar content-->
+|    Filter Any Column <input ng-model="query.$"> 
+ 
+|      Status filter
+
+|	<select ng-model="status_filter" ng-options="job.status as job.status for job in filteredData | unique:'status'">
+|   <option value="">-- chose status --</option>
+|  // unique options from the categories
+|	</select>
+|	Task filter    
+|		<select ng-model="task_filter" ng-options="job.task as job.task group by  'pixelsim' for job in filteredData | unique:'task'">
+| 		 <option value="">-- chose task --</option>  
+|	</select> <br>
+|    </div>
+|   </div>     
+|       <!-- filter section end here---> 
+|      <!-- data table section --->
+|  <div class="row-fluid">
+|   <div class="span12">
+|	<table class="table table-striped  table-hover">	
+| 		  <thead>
+|   <tr>
+|     <th><a href="" ng-click="orderProp = 'id'; reverse=!reverse">ID</a></th>
+|     <th><a href="" ng-click="orderProp = 'task'; reverse=!reverse">Name</a></th>
+|     <th>Jobs</th>
+|     <th><a href="" ng-click="orderProp = 'status'; reverse=!reverse">Status</a></th>
+|     <th>QC</th>
+|     <th><a href="" ng-click="orderProp = 'ts_created'; reverse=!reverse">Created</a></th>
+|      <th><a href="" ng-click="orderProp = 'ts_started'; reverse=!reverse">Started</a></th>
+|       <th><a href="" ng-click="orderProp = 'ts_ended'; reverse=!reverse">Ended</a></th>
+|    <th>All subjobs</th>
+|    <th>One level subjobs</th>
+     
+|  </tr>
+| </thead>
+|   <tbody>
+|       <tr ng-repeat="job in jobs | filter:query |filter:status_filter | filter:task_filter | orderBy:orderProp:reverse  | startFrom:currentPage*pageSize | limitTo:pageSize"   ng-class="{ error: (job.status == 'FAILED') }">
+|         <td>{{job.id}}</td>
+|        <td><p>{{job.task}}</p>  </td>
+|        <td><p>{{job.nbr}}</p></td>
+|        <td> <p>{{job.status}}</p>   </td>
+|        <td><p>not yet</p></td>
+|         <td> <p>{{job.ts_created | date:'medium'}}</p>   </td>
+|         <td> <p>{{job.ts_started | date:'medium'}}</p>   </td>
+|         <td> <p>{{job.ts_ended | date:'medium'}}</p>   </td>
+          
+|      <td> <a ng-show="job.nbr > 0"  href="#/detailed_view/{{job.id}}/All" class="btn btn-primary"><i   class="icon-pencil"></i></a> </td>
+|      <td> <a ng-show="job.nbr > 0"  href="#/detailed_view/{{job.id}}" class="btn btn-primary"><i   class="icon-pencil"></i></a> </td>
+         
+|     </tr>
+| </tbody>  
+| </table>
+|    <div class="pagination pull-left">
+|                            <ul>
+|                              <li ng-class="{disabled: currentPage == 0}">
+|                                    <a href ng-click="prevPage()">« Prev</a>
+|                                </li>
+|                                   <li ng-repeat="n in [] | range:numberOfPages()" ng-class="{active: $index == currentPage}" ng-click="setPage()" ><a href="" ng-bind="$index + 1">1</a></li>
+|                               <li ng-class="{disabled: currentPage >= numberOfPages()-1}">
+|                                    <a href ng-click="nextPage()">Next »</a>
+|                                </li>
+|                         
+|                            </ul>
+|
+|                        </div>
+|   
+| </div>
+| </div>
+|  <!-- data table section end here--->
+|</div>
