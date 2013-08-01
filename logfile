@@ -1,0 +1,75 @@
+LOG:  database system was shut down at 2013-07-15 15:49:39 CEST
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started
+ERROR:  column "spclocation" does not exist at character 25
+STATEMENT:  SELECT ts.oid, spcname, spclocation, spcoptions, pg_get_userbyid(spcowner) as spcuser, spcacl, pg_catalog.shobj_description(oid, 'pg_tablespace') AS description FROM pg_tablespace ts
+	 ORDER BY spcname
+FATAL:  sorry, too many clients already
+FATAL:  sorry, too many clients already
+FATAL:  sorry, too many clients already
+FATAL:  sorry, too many clients already
+FATAL:  sorry, too many clients already
+FATAL:  sorry, too many clients already
+LOG:  autovacuum launcher shutting down
+LOG:  received smart shutdown request
+LOG:  shutting down
+LOG:  database system is shut down
+LOG:  database system was shut down at 2013-07-18 14:54:38 CEST
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started
+ERROR:  column "spclocation" does not exist at character 25
+STATEMENT:  SELECT ts.oid, spcname, spclocation, spcoptions, pg_get_userbyid(spcowner) as spcuser, spcacl, pg_catalog.shobj_description(oid, 'pg_tablespace') AS description FROM pg_tablespace ts
+	 ORDER BY spcname
+LOG:  autovacuum launcher shutting down
+LOG:  received smart shutdown request
+LOG:  shutting down
+LOG:  database system is shut down
+LOG:  database system was shut down at 2013-07-19 15:01:28 CEST
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started
+LOG:  autovacuum launcher shutting down
+LOG:  received smart shutdown request
+LOG:  shutting down
+LOG:  database system is shut down
+LOG:  database system was shut down at 2013-07-23 15:49:08 CEST
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started
+LOG:  autovacuum launcher shutting down
+LOG:  received smart shutdown request
+LOG:  shutting down
+LOG:  database system is shut down
+LOG:  database system was shut down at 2013-07-26 09:30:02 CEST
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started
+ERROR:  operator does not exist: integer == unknown at character 35
+HINT:  No operator matches the given name and argument type(s). You might need to add explicit type casts.
+STATEMENT:  SELECT *  FROM job where super_id ==  $1
+ERROR:  operator does not exist: integer == unknown at character 35
+HINT:  No operator matches the given name and argument type(s). You might need to add explicit type casts.
+STATEMENT:  SELECT *  FROM job where super_id == $1
+FATAL:  database "pau_test" does not exist
+ERROR:  column "spclocation" does not exist at character 25
+STATEMENT:  SELECT ts.oid, spcname, spclocation, spcoptions, pg_get_userbyid(spcowner) as spcuser, spcacl, pg_catalog.shobj_description(oid, 'pg_tablespace') AS description FROM pg_tablespace ts
+	 ORDER BY spcname
+ERROR:  syntax error at or near "(" at character 39
+STATEMENT:  select * from job where super_id = int(173);
+ERROR:  column "173" does not exist at character 36
+STATEMENT:  select * from job where super_id = "173";
+ERROR:  syntax error at or near "UNION" at character 25
+STATEMENT:  select * from job where UNION [super_id = 173, id = 173];
+ERROR:  syntax error at or near "select" at character 79
+STATEMENT:  select * from job where super_id = 173 UNION select * from job where id = 173
+	select * from job where super_id = 173;
+ERROR:  each UNION query must have the same number of columns at character 54
+STATEMENT:  select id from job where super_id = 173 UNION select * from job where id = 173;
+FATAL:  database "pau_postgres" does not exist
+ERROR:  syntax error at or near "job" at character 56
+STATEMENT:  select id from job where id = 173 union select id form job where super_id = 173;
+ERROR:  column "super_id" does not exist at character 90
+STATEMENT:  select id from job where id = 173 union select id from job where super_id = 173 order by super_id;
+ERROR:  each UNION query must have the same number of columns at character 57
+STATEMENT:  select id,super_id from job where id = 173 union select id from job where super_id = 173 order by super_id;
+LOG:  autovacuum launcher shutting down
+LOG:  received smart shutdown request
+LOG:  shutting down
+LOG:  database system is shut down
