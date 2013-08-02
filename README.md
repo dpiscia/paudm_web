@@ -33,5 +33,5 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 _(Nothing yet)_
 
 ## License
-Copyright (c) 2013 davide  
+Copyright (c) 2013 PAUDM-team  
 Licensed under the MIT license.
