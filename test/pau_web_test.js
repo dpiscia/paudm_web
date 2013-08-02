@@ -1,6 +1,6 @@
 'use strict';
 
-var myTest = require('../lib/test.js');
+var pau_web = require('../lib/pau_web.js');
 
 /*
   ======== A Handy Little Nodeunit Reference ========
@@ -30,7 +30,7 @@ exports['awesome'] = {
   'no args': function(test) {
     test.expect(1);
     // tests here
-    test.equal(myTest.awesome(), 'awesome', 'should be awesome.');
+    test.equal(pau_web.awesome(), 'awesome', 'should be awesome.');
     test.done();
   },
 };
