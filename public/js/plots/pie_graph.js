@@ -1,29 +1,30 @@
-var createSVG;
+'use strict';
+/* jshint -W117 */
+/* jshint -W030 */
+/* jshint -W098 */
 
-createSVG_pie = function(scope, element) {
+var createSVG_pie = function(scope, element) {
   scope.w = 800;
   scope.h = 400;
-  var legend = d3.select("body").append("svg")
+
   if (scope.svg == null) {
     return scope.svg = d3.select(element[0]).append("svg").attr("width", scope.w).attr("height", scope.h);
   }
   
 };
 
-var updateBarAttr, updateGraph, updateTextAttr;
 
-updateGraph_pie = function(newVal, oldVal,  scope) {
+var updateGraph_pie = function(newVal, oldVal,  scope) {
 	scope.svg.selectAll('g.legend').remove();
 	scope.svg.selectAll('g.state').remove();
 	scope.svg.selectAll(".arc").remove(); 
 	console.log("pie chart");
-	  var radius  =200;
-	  console.log(newVal.length);
+	var radius  =200;
+
 	
-	if (scope.type == "task") {newVal = mod_chart_task(scope.data);}
+	if (scope.type === "task") {newVal = mod_chart_task(scope.data);}
 	else {newVal = mod_chart_status(scope.data);}
-	    
-	var radius = Math.min(scope.w, scope.h) / 2;
+	radius = Math.min(scope.w, scope.h) / 2;
 	var color = d3.scale.category20();
 
 

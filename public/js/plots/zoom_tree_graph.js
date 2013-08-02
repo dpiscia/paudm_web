@@ -1,10 +1,12 @@
+'use strict';
 
-
+/* jshint -W117 */
+/* jshint -W116 */
 createSVG_Zoom = function(scope, element) {
   scope.w = 800;
   scope.h = 600;
   scope.r = 500;
-  var legend = d3.select("body").append("svg")
+
   if (scope.svg == null) {
     return scope.svg = d3.select(element[0]).append("svg").attr("width", scope.w).attr("height", scope.h).append("g").attr("transform", "translate(" + (scope.w -scope.r ) / 2 + "," + (scope.h - scope.r) / 2 + ")");
   }
@@ -25,11 +27,11 @@ root = tree_dict_from_flatten(scope.data[0],[],scope.data)[0];
 var color = d3.scale.category20();	
 var pack = d3.layout.pack()
     .size([scope.r, scope.r])
-    .value(function(d) { return d.size; })
+    .value(function(d) { return d.size; });
     
    var nodes = pack.nodes(tree_dict_from_flatten(scope.data[0],[],scope.data)[0]); 
 var legend = scope.svg.selectAll('g')
-			.data(function() {if (scope.type == 'task' ) return group_task(scope.data); else return group_status(scope.data)})
+			.data(function() {if (scope.type === 'task' ) return group_task(scope.data); else return group_status(scope.data);})
 			.enter().append('g').attr('class', 'legend').attr("transform", "translate(0 ,20 )");
   
   legend.append('rect')
@@ -52,12 +54,12 @@ var legend = scope.svg.selectAll('g')
     .enter().append("circle")
       .attr("class", function(d) { return d.children ? "parent" : "child"; })
       .attr("cx", function(d) { 
-      	return d.x; })
+		return d.x; })
       .attr("cy", function(d) { 
-      	return d.y; })
+		return d.y; })
       .attr("r", function(d) { return d.r; })
-      .style("fill", function(d) {if (scope.type == 'task' ) return color(d.name); else return color(d.status)})
-      .on("click", function(d) { return zoom(node == d ? root : d); });
+      .style("fill", function(d) {if (scope.type === 'task' ) return color(d.name); else return color(d.status);})
+      .on("click", function(d) { return zoom(node === d ? root : d); });
 
   scope.svg.selectAll("text")
       .data(nodes)
@@ -74,7 +76,7 @@ var legend = scope.svg.selectAll('g')
   //d3.select(window).on("click", function() { zoom(root); });
 
 
-function zoom(d, i) {
+function zoom(d) {
   var k = scope.r / d.r / 2;
   x.domain([d.x - d.r, d.x + d.r]);
   y.domain([d.y - d.r, d.y + d.r]);
@@ -94,8 +96,7 @@ function zoom(d, i) {
 
   node = d;
   d3.event.stopPropagation();
-};
-	
+}	
 	
 };
 

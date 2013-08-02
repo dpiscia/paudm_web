@@ -1,5 +1,5 @@
 var createSVG;
-
+/* jshint -W117 */
 createSVG = function(scope, element) {
   scope.w = 800;
   scope.h = 400;
@@ -9,19 +9,18 @@ createSVG = function(scope, element) {
   }
 };
 
-var updateBarAttr, updateGraph, updateTextAttr;
+var updateGraph;
 
 updateGraph = function(newVal, oldVal, scope) {
 newVal = scope.data;
-	if (scope.type == "task") {newVal = mod_chart_task(newVal);}
+	if (scope.type === "task") {newVal = mod_chart_task(newVal);}
 	else {newVal = mod_chart_status(newVal);}
-var margin = {top: 20, right: 20, bottom: 30, left: 40};
 scope.svg.selectAll("g").remove();
 scope.svg.selectAll(".bar").remove();
-var formatPercent = d3.format(".0%");
+
 
 var x = d3.scale.ordinal()
-    .rangeRoundBands([0, 800], .1, 0.5);
+    .rangeRoundBands([0, 800], 0.1 , 0.5);
 
 var y = d3.scale.linear()
     .range([400, 0]);
@@ -87,12 +86,12 @@ newVal.forEach(function(d) {
     bars.exit().remove();  
     
     bars.enter().append("rect")
-  	   .attr("class", "bar")
-      .attr("x", function(d) { return x(d.status); })
-      .attr("width", x.rangeBand())
-      .attr("y", scope.h)
-      .attr("height", 0)
-      .style("fill", function(d) { 
+		.attr("class", "bar")
+		.attr("x", function(d) { return x(d.status); })
+		.attr("width", x.rangeBand())
+		.attr("y", scope.h)
+		.attr("height", 0)
+		.style("fill", function(d) { 
           return color(d.status);
         });
       
