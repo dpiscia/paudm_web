@@ -3,19 +3,22 @@
 //   the request is authenticated (typically via a persistent login session),
 //   the request will proceed.  Otherwise, the user will be redirected to the
 //   login page.
+'use strict';
+/* jshint -W117 */
 
-var passport = require('passport')
-	, LocalStrategy = require('passport-local').Strategy;
-var flash = require('connect-flash');
+
+var passport = require('passport'), 
+	LocalStrategy = require('passport-local').Strategy;
+
 	
 module.exports.ensureAuthenticated = function (req, res, next) {
   if (req.isAuthenticated()) { return next(); }
-  res.redirect('/login')
-}
+  res.redirect('/login');
+};
 
 var users = [
-    { id: 1, username: 'bob', password: 'secret', email: 'bob@example.com' }
-  , { id: 2, username: 'joe', password: 'birthday', email: 'joe@example.com' }
+    { id: 1, username: 'bob', password: 'secret', email: 'bob@example.com' } ,
+    { id: 2, username: 'joe', password: 'birthday', email: 'joe@example.com' }
 ];
 
 function findById(id, fn) {
@@ -59,7 +62,7 @@ passport.deserializeUser(function(id, done) {
 //   credentials (in this case, a username and password), and invoke a callback
 //   with a user object.  In the real world, this would query a database;
 //   however, in this example we are using a baked-in set of users.
-var strategy = passport.use(new 
+module.exports.strategy  = passport.use(new 
 	LocalStrategy(
   function(username, password, done) {
     // asynchronous verification, for effect...
@@ -74,9 +77,10 @@ var strategy = passport.use(new
       findByUsername(username, function(err, user) {
         if (err) { return done(err); }
         if (!user) { return done(null, false, { message: 'Unknown user ' + username }); }
-        if (user.password != password) { return done(null, false, { message: 'Invalid password' }); }
+        if (user.password !== password) { return done(null, false, { message: 'Invalid password' }); }
         return done(null, user);
-      })
+      });
     });
   }
 ));
+

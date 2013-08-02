@@ -1,65 +1,68 @@
+'use strict';
+/* jshint -W117 */
+/* jshint -W116 */
+/* jshint -W098 */
+/* jshint -W018 */
+
 function mod_chart_status(data_obj) {
 	//return data in json format and groupeb by status, ready to be fed into the d3 plots
   var hist = {};
-  var data_tmp = []
+  var data_tmp = [];
   
-  for (_i = 0, _len = data_obj.length; _i < _len; _i++) {
-  i = data_obj[_i];
+  for (var _i = 0,  _len = data_obj.length; _i < _len; _i++) {
+  var i = data_obj[_i];
   if (hist[i.status]) hist[i.status] ++;
   else hist[i.status] = 1;}
  
-  for (property in hist){
+  for (var property in hist){
 
-   data_tmp.push({ status : property , data : hist[property]} )
-  };
+   data_tmp.push({ status : property , data : hist[property]} );
+  }
 
-  return data_tmp;
- 
-	
-	
-};
+  return data_tmp;	
+}
 function mod_chart_task(data_obj) {
 	//return data in json format and groupeb by status, ready to be fed into the d3 plots
   var hist = {};
-  var data_tmp = []
+  var data_tmp = [];
   
-  for (_i = 0, _len = data_obj.length; _i < _len; _i++) {
-  i = data_obj[_i];
+  for (var _i = 0, _len = data_obj.length; _i < _len; _i++) {
+  var i = data_obj[_i];
   if (hist[i.task]) hist[i.task] ++;
   else hist[i.task] = 1;}
  
-  for (property in hist){
+  for (var property in hist){
 
-   data_tmp.push({ status : property , data : hist[property]} )
-  };
+   data_tmp.push({ status : property , data : hist[property]} );
+  }
 
   return data_tmp;
  
 	
 	
-};
+}
 
 
 function mod_plot_status(data)
 {
 	//return data in time series, grouped by status
-	entries = time(data);
-	entries_ord = entries.sort(dynamicSort("time"));
+	var entries = time(data);
+	var entries_ord = entries.sort(dynamicSort("time"));
 	return last(entries_ord,data);
 	
-};
+}
 
 function time(job_list){
 var prova = [];
 for (var i in job_list){
 //console.log(job_list[i].status);
-if (!!job_list[i].ts_created) {prova.push({"id" : job_list[i].id ,"status" : "CREATED", "time" : new Date(job_list[i].ts_created) }); };
+if (!!job_list[i].ts_created) {prova.push({"id" : job_list[i].id ,"status" : "CREATED", "time" : new Date(job_list[i].ts_created) }); }
 if (!!job_list[i].ts_queued) prova.push({"id" : job_list[i].id ,"status" : "QUEUED", "time" : new Date(job_list[i].ts_queued )});
 if (!!job_list[i].ts_started) prova.push({"id" : job_list[i].id ,"status" : "STARTED", "time" : new Date(job_list[i].ts_started )});
 if (!!job_list[i].ts_ended) prova.push({"id" : job_list[i].id ,"status" : "ENDED", "time" : new Date(job_list[i].ts_ended )});
 }
 return prova;
-};
+}
 
 function dynamicSort(property) {
     var sortOrder = 1;
@@ -70,8 +73,8 @@ function dynamicSort(property) {
     return function (a,b) {
         var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
         return result * sortOrder;
-    }
-};
+    };
+}
 
 
 
@@ -87,32 +90,32 @@ for (var i in event_list){
     for (var j in job_list) {
     //console.log(Date(job_list[j].ts_ended)  <= event_list[i].time);
     if ( new Date(job_list[j].ts_ended) <= event_list[i].time ) { 
-    	if (job_list[j].status == "DONE") {
-    							done++;
-    										}
-    	else {failed++}
+		if (job_list[j].status == "DONE") {
+		done++;
+			}
+	else {failed++;}
      }
     else if ( new Date(job_list[j].ts_started) <= event_list[i].time ) { 
-    	started++; }
+		started++; }
     else if ( new Date(job_list[j].ts_queued) <= event_list[i].time ) { 
-    	queued++; }
+		queued++; }
     else if ( new Date(job_list[j].ts_created) <= event_list[i].time ) { 
-    	created++; };
+		created++; }
     
     }
 	fin.push({"CREATED" : created, "QUEUED" : queued , "STARTED" : started , "FAILED" : failed , "DONE" : done, "date" : event_list[i].time});
 }
 return fin;
-};
+}
 
 function mod_plot_task(data)
 {
 		//return data in time series, grouped by task
-	entries = time_task(data);
-	entries_ord = entries[0].sort(dynamicSort("time"));
+	var entries = time_task(data);
+	var entries_ord = entries[0].sort(dynamicSort("time"));
 	return last_task(entries_ord,entries[1],data);
 	
-};
+}
 
 function time_task(job_list){
 var prova = [];
@@ -127,7 +130,7 @@ if (!!job_list[i].ts_started) prova.push({"time" : new Date(job_list[i].ts_start
 if (!!job_list[i].ts_ended) prova.push({"time" : new Date(job_list[i].ts_ended )});
 }
 return [prova, task_list];
-};
+}
 
 
 
@@ -137,16 +140,16 @@ function last_task(event_list,task_list, job_list)
 	
 	var fin = [];
 for (var i in event_list){
-    counter =  new Array(null, (task_list.length)).map(Number.prototype.valueOf,0);
+    var counter =  new Array(null, (task_list.length)).map(Number.prototype.valueOf,0);
     for (var j in job_list) {
     if ( (new Date(job_list[j].ts_started) <= event_list[i].time) && (event_list[i].time < new Date(job_list[j].ts_ended))) { 
-    	counter[task_list.indexOf(job_list[j].task)]++;
-    	
+		counter[task_list.indexOf(job_list[j].task)]++;
+	
      }
 
     
     }
-    temp = {};
+    var temp = {};
     temp["date"]= event_list[i].time;
     
 	for (var k in task_list) 
@@ -156,20 +159,20 @@ for (var i in event_list){
 	fin.push(temp);
 }
 return fin;
-};
+}
 
 
 function tree_dict_from_flatten(root_job, family, scope){
         
         if (!family) family = [];
-        structura = { "name" : "" , "status" : "" , "id" : "" , "size" : new Date(root_job.ts_ended)-new Date(root_job.ts_started) };
+        var structura = { "name" : "" , "status" : "" , "id" : "" , "size" : new Date(root_job.ts_ended)-new Date(root_job.ts_started) };
         structura.name = root_job.task;
         structura.status = root_job.status;
         structura.id = root_job.id;
         var subjobs = [];
         for (var i=0; i<scope.length; i++)
         {    
-        	if (scope[i].super_id == root_job.id) {subjobs.push(scope[i]);
+		if (scope[i].super_id == root_job.id) {subjobs.push(scope[i]);
                                                    structura.children = [];  }
         }  
 console.log(family);
@@ -178,16 +181,16 @@ console.log(family);
         
         for (var j=0; j<subjobs.length; j++)
             tree_dict_from_flatten(subjobs[j], family[family.length-1].children, scope) ; 
-        return family
+		return family;
 }
 
       function group_status(data){
-     	var hist = [];
+		var hist = [];
 		data.map( function (a) { if (hist.indexOf(a.status) == -1 ) hist.push(a.status);  } );
 		return hist;
-     };   
+     } 
         function group_task(data){
-     	var hist = [];
+		var hist = [];
 		data.map( function (a) { if (hist.indexOf(a.task) == -1 ) hist.push(a.task);  } );
 		return hist;
-     };   
+     }
