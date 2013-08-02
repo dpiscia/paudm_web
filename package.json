@@ -1,8 +1,33 @@
 {
-  "name": "application-name",
-  "version": "0.0.0",
-  "private": true,
-  "dependencies": {
+  "name": "pau_web",
+  "description": "a",
+  "version": "0.1.0",
+  "homepage": "https://github.com/dpiscia/paudm_web",
+  "author": {
+    "name": "davide",
+    "email": "davidepi79@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dpiscia/paudm_web"
+  },
+  "bugs": {
+    "url": "https://github.com/dpiscia/paudm_web/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/dpiscia/paudm_web/blob/master/LICENSE-MIT"
+    }
+  ],
+  "main": ".",
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "scripts": {
+    "test": "grunt nodeunit"
+  },
+    "dependencies": {
     "socket.io": "~0.9.16",
     "express": "~3.2.6",
     "jade": "~0.31.2",
@@ -13,5 +38,13 @@
     "passport": ">= 0.0.0",
     "passport-local": ">= 0.0.0"
     
-  }
+  },
+
+  "devDependencies": {
+    "grunt-contrib-jshint": "~0.6.0",
+    "grunt-contrib-nodeunit": "~0.2.0",
+    "grunt-contrib-watch": "~0.4.0",
+    "grunt": "~0.4.1"
+  },
+  "keywords": []
 }
