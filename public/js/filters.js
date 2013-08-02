@@ -1,5 +1,6 @@
 'use strict';
-
+/* jshint -W117 */
+/* jshint -W065 */
 /* Filters */
 
 angular.module('myApp.filters', []).filter('unique', function () {
@@ -11,8 +12,7 @@ angular.module('myApp.filters', []).filter('unique', function () {
     }
 
     if ((filterOn || angular.isUndefined(filterOn)) && angular.isArray(items)) {
-      var hashCheck = {}, newItems = [];
-
+      var newItems = [];
       var extractValueToCompare = function (item) {
         if (angular.isObject(item) && angular.isString(filterOn)) {
           return item[filterOn];
@@ -22,7 +22,7 @@ angular.module('myApp.filters', []).filter('unique', function () {
       };
 
       angular.forEach(items, function (item) {
-        var valueToCheck, isDuplicate = false;
+        var isDuplicate = false;
 
         for (var i = 0; i < newItems.length; i++) {
           if (angular.equals(extractValueToCompare(newItems[i]), extractValueToCompare(item))) {
@@ -44,13 +44,13 @@ angular.module('myApp.filters', []).filter('unique', function () {
     return function(input, start) {
         start = +start; //parse to int
         return input.slice(start);
-    }
+    };
 }).
 filter('range', function() {
   return function(input, total) {
     total = parseInt(total);
     for (var i=0; i<total; i++)
-      input.push(i);
+      {input.push(i);}
     return input;
   };
 });

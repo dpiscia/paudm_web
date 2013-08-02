@@ -1,3 +1,5 @@
+/* jshint -W117 */
+
 createSVG_Force = function(scope, element) {
   scope.w = 800;
   scope.h = 500;
@@ -31,7 +33,8 @@ var color = d3.scale.category20();
   var nodes = flatten(root),
       links = d3.layout.tree().links(nodes);
   var legend = scope.svg.selectAll('g')
-			.data(function() {if (scope.type == 'task' ) return group_task(scope.data); else return group_status(scope.data)})
+			.data(function() {if (scope.type === 'task' ) {return group_task(scope.data);}
+			else {return group_status(scope.data);}})
 			.enter().append('g').attr('class', 'legend').attr("transform", "translate(0 ,20 )");
   
   legend.append('rect')
@@ -73,14 +76,14 @@ var color = d3.scale.category20();
   // Update the nodes…
   node = scope.svg.selectAll("circle.node")
       .data(nodes, function(d) { return d.id; })
-      .style("fill", function(d) {if (scope.type == 'task' ) 
-      return color(d.name); else return color(d.status)})
+      .style("fill", function(d) {if (scope.type === 'task' ) 
+      {return color(d.name);} else {return color(d.status);}})
       .enter().append("svg:circle")
       .attr("class", "node")
       .attr("cx", function(d) { return d.x; })
       .attr("cy", function(d) { return d.y; })
       .attr("r", 5)
-      .style("fill", function(d) {if (scope.type == 'task' ) return color(d.name); else return color(d.status)})
+      .style("fill", function(d) {if (scope.type === 'task' ) {return color(d.name);} else {return color(d.status);}})
       .on("click", function(d){
   if (d.children) {
     d._children = d.children;
@@ -111,9 +114,7 @@ var color = d3.scale.category20();
     node.attr("cx", function(d) { return d.x; })
         .attr("cy", function(d) { return d.y; });
   });
-  
-  
-}
+};
 
 
 
@@ -127,8 +128,8 @@ function flatten(root) {
   var nodes = [], i = 0;
 
   function recurse(node) {
-    if (node.children) node.children.forEach(recurse);
-    if (!node.id) node.id = ++i;
+    if (node.children) {node.children.forEach(recurse);}
+    if (!node.id) {node.id = ++i;}
     nodes.push(node);
   }
 

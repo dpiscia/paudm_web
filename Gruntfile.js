@@ -17,6 +17,15 @@ module.exports = function(grunt) {
       lib: {
         src: ['lib/**/*.js']
       },
+      routes: {
+        src: ['routes/**/*.js']
+      },
+      client: {
+        src: ['public/js/**/*.js']
+      },
+      root: {
+        src: ['*.js']
+      },
       test: {
         src: ['test/**/*.js']
       },

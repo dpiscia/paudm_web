@@ -1,5 +1,5 @@
 'use strict';
-
+/* jshint -W117 */
 // Declare app level module which depends on filters, and services
 
 angular.module('jobcat', [
@@ -10,7 +10,7 @@ angular.module('jobcat', [
   'job.directives',
   'ngBreadcrumbs',
 ]).
-config(function ($routeProvider, $locationProvider) {
+config(function ($routeProvider) {
   $routeProvider.
     when('/general_view', {
       templateUrl: '/partials/job-list.jade',

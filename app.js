@@ -1,4 +1,5 @@
-
+'use strict';
+/* jshint -W030 */
 /**
  * Module dependencies
  */
@@ -6,7 +7,6 @@
 var express = require('express'),
   routes = require('./routes'),
   api = require('./routes/api'),
-  http = require('http'),
   path = require('path'),
   flash = require('connect-flash'),
   passport = require('passport');
@@ -46,7 +46,7 @@ if (app.get('env') === 'development') {
 // production only
 if (app.get('env') === 'production') {
   // TODO
-};
+}
 
 security.strategy;
 /**
@@ -70,13 +70,13 @@ app.get('/login', function(req, res){
 app.post('/login', 
   passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }),
   function(req, res) {
-  	console.log("redirect");
+	console.log("redirect");
     res.redirect('/');
   });
   
 db.connectDatabase(function(){
   console.log("connected to DB");// your other code
-})
+});
 
   
   // Socket.io Communication

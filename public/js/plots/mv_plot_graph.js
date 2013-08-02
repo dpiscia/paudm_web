@@ -1,20 +1,21 @@
-var createSVG;
+
+/* jshint -W117 */
+/* jshint -W030 */
+
 
 createSVG_mv_p = function(scope, element) {
 	var margin = {top: 20, right: 80, bottom: 30, left: 50};
     scope.w = 960 - margin.left - margin.right,
     scope.h = 400 - margin.top - margin.bottom;
+	if (scope.svg == null) {
 
-  
-  if (scope.svg == null) {
-// 	var legend = d3.select("body").append("svg")
     return scope.svg = d3.select(element[0]).append("svg").attr("width", scope.w + margin.left + margin.right ).attr("height", scope.h + margin.top + margin.bottom).append("g")
     .attr("transform", "translate(50 ,20 )");
   }
   
 };
 
-var updateBarAttr;
+
 
 updateGraph_mv_p = function(newVal, oldVal,  scope) {
 	//without console.log does not work, why?
@@ -25,9 +26,9 @@ updateGraph_mv_p = function(newVal, oldVal,  scope) {
 	scope.svg.selectAll(".y.axis").remove();
     scope.svg.selectAll(".x.axis").remove();
 	//scope.svg.selectAll(".legend").remove();
-	
+	var data;
 	console.log("change graph",scope.data.length);
-	if (scope.type == "task") {var data = mod_plot_task(scope.data);}
+	if (scope.type === "task") {data = mod_plot_task(scope.data);}
 	else {data = mod_plot_status(scope.data);} 
 	//var data = mod_plot(scope.data);
 	
@@ -41,8 +42,7 @@ var y = d3.scale.linear()
 var color = d3.scale.category10();
 
 
-    
-var formatyAxis = d3.format('.0f');
+
 
 
 
@@ -73,11 +73,7 @@ var status = color.domain().map(function(name) {
     d3.min(status, function(c) { return d3.min(c.values, function(v) { return v.counts; }); }),
     d3.max(status, function(c) { return d3.max(c.values, function(v) { return v.counts; }); })
   ]);
-    var y_max = y.domain().slice(-1)[0]
-    var x_max = x.domain().slice(-1)[0]
-   // scope.svg.selectAll('g').exit().remove();
-   // scope.svg.selectAll("rect").remove();
-   // scope.svg.selectAll("text").remove();
+
  var legend = scope.svg.selectAll('g')
         .data(status)
         .enter()
@@ -127,7 +123,7 @@ var xAxis = d3.svg.axis()
       
       
       var state = scope.svg.selectAll(".state")
-      .data(status)
+      .data(status);
       
       
       
@@ -138,12 +134,11 @@ var xAxis = d3.svg.axis()
 		
 		
   state.append("path")
-      .attr("class", "line")
-      .attr("d", function(d) { 
-      	return line(d.values); })
-
-      .style("stroke", function(d) { return color(d.name); })
-      .style("stroke-width", 2);
+		.attr("class", "line")
+		.attr("d", function(d) { 
+			return line(d.values); })
+		.style("stroke", function(d) { return color(d.name); })
+		.style("stroke-width", 2);
 
 
      
