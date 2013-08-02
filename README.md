@@ -3,11 +3,13 @@
 
 
 ## Getting Started
-Install the module with: `npm install pau_web`
+clone the  git module with: `git clone https://github.com/dpiscia/paudm_web`
+
+install the module dependencies
 
 ```javascript
-var pau_web = require('pau_web');
-pau_web.awesome(); // "awesome"
+cd paudm_web
+npm install
 ```
 Need to prepare a config.js file for DB connection
 ```javascript
