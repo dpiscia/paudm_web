@@ -1,12 +1,5 @@
 # pau_web [![Build Status](https://secure.travis-ci.org/dpiscia/paudm_web.png?branch=master)](http://travis-ci.org/dpiscia/paudm_web)
 
-Need to prepare a config.js file for DB connection
-
-var config = {}
-
-config.url = "postgresql://Username:password@hostname/db_name";
-
-module.exports = config;
 
 
 ## Getting Started
@@ -15,6 +8,14 @@ Install the module with: `npm install pau_web`
 ```javascript
 var pau_web = require('pau_web');
 pau_web.awesome(); // "awesome"
+```
+Need to prepare a config.js file for DB connection
+```javascript
+var config = {}
+
+config.url = "postgresql://Username:password@hostname/db_name";
+
+module.exports = config;
 ```
 
 ## Documentation
