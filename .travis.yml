@@ -11,4 +11,4 @@
   - node app.js &
   - sleep 3 # give server some time to start
   
- script: grunt release
+ 

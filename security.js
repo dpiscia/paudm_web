@@ -75,7 +75,6 @@ var strategy = passport.use(new
         if (err) { return done(err); }
         if (!user) { return done(null, false, { message: 'Unknown user ' + username }); }
         if (user.password != password) { return done(null, false, { message: 'Invalid password' }); }
-        console.log("entra");
         return done(null, user);
       })
     });
