@@ -23,6 +23,43 @@ module.exports = config;
 ## Documentation
 _(Coming soon)_
 
+### TRIGGER
+in order to connect server to DB , some triggers have to be set on the DB side:
+
+CREATE FUNCTION notify_trigger() RETURNS trigger AS $$
+DECLARE
+BEGIN
+  PERFORM pg_notify('watchers', TG_OP ||  ',id,' || NEW.id );
+  RETURN new;
+END;
+$$ LANGUAGE plpgsql;
+
+
+
+
+
+CREATE TRIGGER watched_table_trigger AFTER INSERT ON job 
+FOR EACH ROW EXECUTE PROCEDURE notify_trigger();
+
+CREATE TRIGGER update_table_trigger AFTER UPDATE ON job 
+FOR EACH ROW EXECUTE PROCEDURE notify_trigger();
+
+
+
+
+CREATE FUNCTION old_notify_trigger() RETURNS trigger AS $$
+DECLARE
+BEGIN
+  PERFORM pg_notify('watchers', TG_OP ||  ',id,' || OLD.id );
+  RETURN new;
+END;
+$$ LANGUAGE plpgsql;
+
+
+CREATE TRIGGER delete_table_trigger AFTER DELETE ON job 
+FOR EACH ROW EXECUTE PROCEDURE old_notify_trigger();
+
+
 ## Examples
 _(Coming soon)_
 
