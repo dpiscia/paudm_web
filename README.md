@@ -67,6 +67,8 @@ testing can be done by typing:
 grunt
 ```
 
+At the moment only jshint coverage is provided
+
 ##Continue Testing
 
 Continue testing is done through Travis-ci https://travis-ci.org/dpiscia/paudm_web
