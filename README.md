@@ -26,6 +26,8 @@ _(Coming soon)_
 ### TRIGGER
 in order to connect server to DB , some triggers have to be set on the DB side:
 
+```javascript
+
 CREATE FUNCTION notify_trigger() RETURNS trigger AS $$
 DECLARE
 BEGIN
@@ -58,7 +60,7 @@ $$ LANGUAGE plpgsql;
 
 CREATE TRIGGER delete_table_trigger AFTER DELETE ON job 
 FOR EACH ROW EXECUTE PROCEDURE old_notify_trigger();
-
+```javascript
 
 ## Examples
 _(Coming soon)_
