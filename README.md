@@ -24,7 +24,7 @@ module.exports = config;
 
 
 ### Triggers
-in order to connect server to DB , some triggers have to be set on the DB side:
+in order to synchronize server to DB , some triggers have to be set on the DB side:
 
 ```javascript
 
