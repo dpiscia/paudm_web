@@ -21,9 +21,9 @@ module.exports = config;
 ```
 
 ## Documentation
-_(Coming soon)_
 
-### TRIGGER
+
+### Triggers
 in order to connect server to DB , some triggers have to be set on the DB side:
 
 ```javascript
