@@ -60,6 +60,16 @@ $$ LANGUAGE plpgsql;
 CREATE TRIGGER delete_table_trigger AFTER DELETE ON job 
 FOR EACH ROW EXECUTE PROCEDURE old_notify_trigger();
 ```
+## Testing
+
+testing can be done by typing:
+```shell
+grunt
+```
+
+##Continue Testing
+
+Continue testing is done through Travis-ci
 
 ## Examples
 _(Coming soon)_
