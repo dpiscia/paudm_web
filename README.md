@@ -35,20 +35,18 @@ BEGIN
   RETURN new;
 END;
 $$ LANGUAGE plpgsql;
+```
 
-
-
-
-
+```javascript
 CREATE TRIGGER watched_table_trigger AFTER INSERT ON job 
 FOR EACH ROW EXECUTE PROCEDURE notify_trigger();
-
+```
+```javascript
 CREATE TRIGGER update_table_trigger AFTER UPDATE ON job 
 FOR EACH ROW EXECUTE PROCEDURE notify_trigger();
+```
 
-
-
-
+```javascript
 CREATE FUNCTION old_notify_trigger() RETURNS trigger AS $$
 DECLARE
 BEGIN
@@ -57,10 +55,11 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-
+```
+```javascript
 CREATE TRIGGER delete_table_trigger AFTER DELETE ON job 
 FOR EACH ROW EXECUTE PROCEDURE old_notify_trigger();
-```javascript
+```
 
 ## Examples
 _(Coming soon)_
