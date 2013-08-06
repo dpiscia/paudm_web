@@ -69,7 +69,7 @@ grunt
 
 ##Continue Testing
 
-Continue testing is done through Travis-ci
+Continue testing is done through Travis-ci https://travis-ci.org/dpiscia/paudm_web
 
 ## Examples
 _(Coming soon)_
