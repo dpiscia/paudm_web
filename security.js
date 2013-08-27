@@ -6,7 +6,7 @@
 'use strict';
 /* jshint -W117 */
 
-var db = require('./db');
+
 var passport = require('passport'), 
 	LocalStrategy = require('passport-local').Strategy;
 
