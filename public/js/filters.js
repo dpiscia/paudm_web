@@ -53,4 +53,10 @@ filter('range', function() {
       {input.push(i);}
     return input;
   };
+}).filter('nl2p', function () {
+    return function(text){
+        text = String(text).trim();
+        text = text.replace(/\n|\r/g, '</p><p>');
+        return (text.length > 0 ? '<p>' + text.replace(/\s/g, '&nbsp;') + '</p>' : null);
+    };
 });

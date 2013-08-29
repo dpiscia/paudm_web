@@ -51,15 +51,28 @@ console.log("entra");
 	});
 }
 	else {
-		if (all === undefined) {
+		if (all === '1') {
 			console.log(recursive_query(id,1));
-			db.client.query(recursive_query(id,100), function(err, result) {
+			db.client.query(recursive_query(id,0), function(err, result) {
 	if(err) {
 		return console.error('error running query', err);
     }
 	console.log(result.rows[0]);
 	deferred.resolve(result.rows);     
 });
+
+}
+
+		if (all === '0') {
+			console.log(recursive_query(id,1));
+			db.client.query("select * from job where id = $1",[id], function(err, result) {
+	if(err) {
+		return console.error('error running query', err);
+    }
+	console.log(result.rows[0]);
+	deferred.resolve(result.rows);     
+});
+
 }
 	else {
 		console.log(recursive_query(id,100));

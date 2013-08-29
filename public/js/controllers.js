@@ -6,7 +6,8 @@ angular.module('myApp.controllers', []).
 	controller('AppCtrl', function () {
 }).
 	controller('MyCtrl1', JobListCtrl).
-	controller('MyCtrl2', JobDetailCtrl);
+	controller('MyCtrl2', JobDetailCtrl).
+	controller('MyCtrl3', JobSingleCtrl);
 function JobListCtrl($scope, $filter, $timeout,  Job, socket, $location, BreadCrumbsService) {
 	BreadCrumbsService.push("home",
 	{
@@ -153,6 +154,19 @@ function JobDetailCtrl($scope, $routeParams,  Job, socket, $location, BreadCrumb
 		}
 		if(selected) { $scope.jobs_list.splice(selected,1);}
 	};
+
+}
+
+function JobSingleCtrl($scope, $routeParams,  Job, socket, $filter, BreadCrumbsService) {
+	Job.query({id :$routeParams.jobId, all: 0}, function(data) {
+    $scope.job = data[0];
+         BreadCrumbsService.push("home",
+	{
+	href: '#/single_view/'+$routeParams.jobId,
+	label: 'view'+"-"+$routeParams.jobId
+    });
+});
+
 
 }
 

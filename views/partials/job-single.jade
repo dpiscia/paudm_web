@@ -1,0 +1,12 @@
+div(style="background-color: rgb(245, 245, 245);")
+	h3 
+		<a href="" ng-click="showDetails = ! showDetails">Config</a>
+	|<span ng-show="showDetails" ng-bind-html="job.config | nl2p"></span>
+div(style="background-color: rgb(245, 245, 245);")
+	h3 
+		<a href="" ng-click="showDetails2 = ! showDetails2">Input</a>
+	|<span ng-show="showDetails2" ng-bind-html="job.input | nl2p"></span>
+div(style="background-color: rgb(245, 245, 245);")
+	h3 
+		<a href="" ng-click="showDetails3 = ! showDetails3">Output</a>
+	|<span ng-show="showDetails3" ng-bind-html="job.output | nl2p"></span>
