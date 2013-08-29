@@ -10,3 +10,27 @@ div(style="background-color: rgb(245, 245, 245);")
 	h3 
 		<a href="" ng-click="showDetails3 = ! showDetails3">Output</a>
 	|<span ng-show="showDetails3" ng-bind-html="job.output | nl2p"></span>
+	
+	
+|       <!-- data table section --->
+|   <div class="row-fluid", style="background-color: rgb(245, 245, 245);">
+|    <div class="span12">
+| 	<table class="table table-striped table-condensed table-hover">	
+| 		  <thead>
+|    <tr>
+|     <th>Quality control</th>
+
+     
+|    </tr>
+|  </thead>
+|    <tbody>
+|        <tr ng-repeat="job in job_list.slice(1,job_list.length) ">
+|          <td><a href="">{{job.id}}</a></td>
+
+|        </tr>
+|    </tbody>  
+|  </table>
+
+
+|  </div>
+|   <!-- data table section end here--->
