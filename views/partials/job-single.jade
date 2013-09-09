@@ -15,17 +15,32 @@ div(style="background-color: rgb(245, 245, 245);")
 |       <!-- data table section --->
 |   <div class="row-fluid", style="background-color: rgb(245, 245, 245);">
 |    <div class="span12">
+|    <h3> Quality control </h3>
 | 	<table class="table table-striped table-condensed table-hover">	
 | 		  <thead>
 |    <tr>
-|     <th>Quality control</th>
+|          <th>ID</th>
+|          <th>Job ID</th>
+|          <th>Ref</th>
+|          <th>Min</a></th>
+|          <th>Max</th>
+|          <th>Value</th>
+|          <th>Units</th>
+|          <th>Passed</th>
 
      
 |    </tr>
 |  </thead>
 |    <tbody>
-|        <tr ng-repeat="job in job_list.slice(1,job_list.length) ">
-|          <td><a href="">{{job.id}}</a></td>
+|        <tr ng-repeat="qc in quality_controls ">
+|          <td>{{qc.id}}</td>
+|          <td>{{qc.job_id}}</td>
+|          <td>{{qc.ref}}</td>
+|          <td>{{qc.min_value}}</td>
+|          <td>{{qc.max_value}}</td>
+|          <td>{{qc.value}}</td>
+|          <td>{{qc.units}}</td>
+|          <td>{{qc.qc_pass}}</td>
 
 |        </tr>
 |    </tbody>  

@@ -157,7 +157,7 @@ function JobDetailCtrl($scope, $routeParams,  Job, socket, $location, BreadCrumb
 
 }
 
-function JobSingleCtrl($scope, $routeParams,  Job, socket, $filter, BreadCrumbsService) {
+function JobSingleCtrl($scope, $routeParams,  Job, socket,QC, $filter, BreadCrumbsService) {
 	Job.query({id :$routeParams.jobId, all: 0}, function(data) {
     $scope.job = data[0];
          BreadCrumbsService.push("home",
@@ -167,6 +167,10 @@ function JobSingleCtrl($scope, $routeParams,  Job, socket, $filter, BreadCrumbsS
     });
 });
 
+	QC.query({id :$routeParams.jobId}, function(data) {
+    $scope.quality_controls = data;
+
+});
 
 }
 

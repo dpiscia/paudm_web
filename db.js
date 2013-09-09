@@ -17,3 +17,10 @@ client.connect(function(err) {
   callback();
 });
 };
+
+/**
+* This is the description for my class.
+*
+* @class MyClass
+* @constructor
+*/
