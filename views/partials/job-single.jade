@@ -33,7 +33,7 @@ div(style="background-color: rgb(245, 245, 245);")
 |  </thead>
 |    <tbody>
 |        <tr ng-repeat="qc in quality_controls ">
-|          <td>{{qc.id}}</td>
+|          <td><a href ng-click="open(qc.plot_file)">{{qc.id}}</a></td>
 |          <td>{{qc.job_id}}</td>
 |          <td>{{qc.ref}}</td>
 |          <td>{{qc.min_value}}</td>
@@ -47,5 +47,21 @@ div(style="background-color: rgb(245, 245, 245);")
 |  </table>
 
 
-|  </div>
+
 |   <!-- data table section end here--->
+|<script type="text/ng-template" id="myModalContent.html">
+|        <div class="modal-header">
+|            <h3>I'm a modal!</h3>
+|        </div>
+|        <div class="modal-body">
+|           <img ng-src="/img_plots/{{plot_name}}" style="margin:auto;">
+
+|        </div>
+|        <div class="modal-footer">
+
+|            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+|        </div>
+|    </script>
+
+
+|  </div>

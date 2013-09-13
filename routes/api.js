@@ -45,7 +45,7 @@ function query(){
 function query_qc_post(id){  
 	
 	var deferred = q.defer();
- 	db.client.query("select * from quality_control  where job_id  = $1",[id],function(err, result) {
+	db.client.query("select * from quality_control  where job_id  = $1",[id],function(err, result) {
     if(err) {	
 		return console.error('error running query', err);
 	}

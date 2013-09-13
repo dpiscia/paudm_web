@@ -1,5 +1,6 @@
 'use strict';
 /* jshint -W117 */
+/* jshint -W098 */
 /* Controllers */
 
 angular.module('myApp.controllers', []).
@@ -156,8 +157,16 @@ function JobDetailCtrl($scope, $routeParams,  Job, socket, $location, BreadCrumb
 	};
 
 }
+var ModalInstanceCtrl = function ($scope, $modalInstance, items) {
 
-function JobSingleCtrl($scope, $routeParams,  Job, socket,QC, $filter, BreadCrumbsService) {
+
+  $scope.plot_name = items;	
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
+};
+
+function JobSingleCtrl($scope, $routeParams,  Job, socket,QC, $filter, BreadCrumbsService, $modal) {
 	Job.query({id :$routeParams.jobId, all: 0}, function(data) {
     $scope.job = data[0];
          BreadCrumbsService.push("home",
@@ -171,8 +180,21 @@ function JobSingleCtrl($scope, $routeParams,  Job, socket,QC, $filter, BreadCrum
     $scope.quality_controls = data;
 
 });
-
+      $scope.img = "prova.jpg";	
+      $scope.open = function (name) {
+      $scope.img = name;
+    var modalInstance = $modal.open({
+      templateUrl: 'myModalContent.html',
+      controller: ModalInstanceCtrl,
+      resolve: {
+       items: function () {
+          return $scope.img;
+        }
+      }
+    });
+  };
 }
+
 
 
 
