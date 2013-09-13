@@ -164,7 +164,7 @@
 |  </thead>
 |    <tbody>
 |        <tr ng-repeat="job in job_list.slice(1,job_list.length)  | filter:query |filter:status_filter | filter:task_filter | orderBy:orderProp:reverse" ng-class="{ error: (job.status == 'FAILED') }">
-|          <td>{{job.id}}</td>
+|          <td><a href="#/single_view/{{job.id}}">{{job.id}}</a></td>
 |          <td><p>{{job.task}}</p>  </td>
 |          <td><p>{{job.nbr}}</p></td>
 |          <td> <p>{{job.status}}</p>   </td>
@@ -174,7 +174,7 @@
 |           <td> <p>{{job.ts_ended | date:'medium'}}</p>   </td>
 
           
-|         <td> <a ng-show="job.nbr > 0"  href="#/detailed_view/{{job.id}}" class="btn btn-primary"><i   class="icon-pencil"></i></a> </td>
+|         <td> <a ng-show="job.nbr > 0"  href="#/detailed_view/{{job.id}}/1" class="btn btn-primary"><i   class="icon-pencil"></i></a> </td>
          
 |        </tr>
 |    </tbody>  

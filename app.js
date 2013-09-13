@@ -62,6 +62,7 @@ app.get('/partials/:name', routes.partials);
 app.get('/api/jobs/:id', security.ensureAuthenticated, api.list);
 app.get('/api/jobs/:id/:all', api.list);
 app.get('/api/jobs', api.list);
+app.get('/api/qc/:id', api.qc_list);
 // redirect all others to the index (HTML5 history)
 app.get('/login', function(req, res){
   res.render('login', { user: req.user, message: req.flash('error') });
