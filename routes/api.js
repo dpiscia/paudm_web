@@ -25,7 +25,13 @@ query_post(req.params.id,req.params.all).then(function(val) {
   
 };
 
-
+exports.qc_list = function(req, res){
+	console.log("qc api");
+	query_qc_post(req.params.id).then (function(val) {
+  //console.log('Promise Resolved!', val);
+	res.send(val);
+});
+};
 function query(){  
 	
 	var deferred = q.defer();
@@ -36,7 +42,18 @@ function query(){
 	db.close();
 	return deferred.promise;
 	}
-  
+function query_qc_post(id){  
+	
+	var deferred = q.defer();
+	db.client.query("select * from quality_control  where job_id  = $1",[id],function(err, result) {
+    if(err) {	
+		return console.error('error running query', err);
+	}
+		console.log(result.rows);
+		deferred.resolve(result.rows);     
+	});
+	return deferred.promise;
+	}  
 //select p.id , (select count(a.id) from job a where a.super_id = p.id) from job p
 function query_post(id,all){  
 var deferred = q.defer();
@@ -51,15 +68,28 @@ console.log("entra");
 	});
 }
 	else {
-		if (all === undefined) {
+		if (all === '1') {
 			console.log(recursive_query(id,1));
-			db.client.query(recursive_query(id,100), function(err, result) {
+			db.client.query(recursive_query(id,0), function(err, result) {
 	if(err) {
 		return console.error('error running query', err);
     }
 	console.log(result.rows[0]);
 	deferred.resolve(result.rows);     
 });
+
+}
+
+		if (all === '0') {
+			console.log("left join query");
+			db.client.query("select * from job where id = $1",[id], function(err, result) {
+	if(err) {
+		return console.error('error running query', err);
+    }
+	console.log(result.rows[0]);
+	deferred.resolve(result.rows);     
+});
+
 }
 	else {
 		console.log(recursive_query(id,100));

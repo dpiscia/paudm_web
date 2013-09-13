@@ -9,6 +9,7 @@ angular.module('jobcat', [
   'ui.bootstrap',
   'job.directives',
   'ngBreadcrumbs',
+  'ngSanitize',
 ]).
 config(function ($routeProvider) {
   $routeProvider.
@@ -23,6 +24,10 @@ config(function ($routeProvider) {
     when('/detailed_view/:jobId/:All', {
       templateUrl: '/partials/job-detail.jade',
       controller: 'MyCtrl2'
+    }).
+    when('/single_view/:jobId', {
+      templateUrl: '/partials/job-single.jade',
+      controller: 'MyCtrl3'
     }).
     otherwise({
       redirectTo: '/general_view'
