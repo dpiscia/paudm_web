@@ -11,8 +11,9 @@
 /* jshint -W098 */
 /* jshint -W003 */
 var q = require('q');
-var sqlite3 = require('sqlite3').verbose();
+
 var db = require('../db');
+
 
 var async = require('async');
 exports.list = function(req, res){
@@ -26,6 +27,7 @@ query_post(req.params.id,req.params.all).then(function(val) {
 };
 
 exports.qc_list = function(req, res){
+	debugger;
 	console.log("qc api");
 	query_qc_post(req.params.id).then (function(val) {
   //console.log('Promise Resolved!', val);
@@ -45,7 +47,7 @@ function query(){
 function query_qc_post(id){  
 	
 	var deferred = q.defer();
-	db.client.query("select * from quality_control  where job_id  = $1",[id],function(err, result) {
+	db.client_pau.query("select * from quality_control  where job_id  = $1",[id],function(err, result) {
     if(err) {	
 		return console.error('error running query', err);
 	}
@@ -59,18 +61,18 @@ function query_post(id,all){
 var deferred = q.defer();
 console.log("entra");
 	if (id === undefined) {
-	db.client.query("select * , (select count(*) as nbr from job a where a.super_id = p.id) from job p where p.super_id is NULL", function(err, result) {
-    if(err) {	
-		return console.error('error running query', err);
-	}
-		console.log(result.rows[0]);
-		deferred.resolve(result.rows);     
-	});
+	db.client_job('job as p').select(db.client_job.raw('*, (select count(*) as nbr from job a where a.super_id = p.id)')).whereNull('super_id').then(function(resp) {
+  console.log(resp);
+  deferred.resolve(resp);
+}, function(err) {
+  console.log(err.message);
+});
+ 
 }
 	else {
 		if (all === '1') {
 			console.log(recursive_query(id,1));
-			db.client.query(recursive_query(id,0), function(err, result) {
+			db.client_job.query(recursive_query(id,0), function(err, result) {
 	if(err) {
 		return console.error('error running query', err);
     }
@@ -82,7 +84,7 @@ console.log("entra");
 
 		if (all === '0') {
 			console.log("left join query");
-			db.client.query("select * from job where id = $1",[id], function(err, result) {
+			db.client_job.query("select * from job where id = $1",[id], function(err, result) {
 	if(err) {
 		return console.error('error running query', err);
     }
@@ -93,7 +95,7 @@ console.log("entra");
 }
 	else {
 		console.log(recursive_query(id,100));
-		db.client.query(recursive_query(id,100), function(err, result) {
+		db.client.query_job(recursive_query(id,100), function(err, result) {
 	if(err) {	
 		return console.error('error running query', err);
 	}
@@ -130,7 +132,7 @@ function recursive_query(id,level) {
 function flat_tree_dict(root_job,level, level_set, callback){
 	var treeSet = []; 
 	console.log("inside flat_Tree ID"+ root_job);
-	db.client.query("SELECT *  , (select count(*) as nbr from job a where a.super_id = p.id) FROM job p where p.id = $1 ",[root_job], function(err, result) {
+	db.client_job.query("SELECT *  , (select count(*) as nbr from job a where a.super_id = p.id) FROM job p where p.id = $1 ",[root_job], function(err, result) {
 	if(err) {
 		return console.error('error running query', err);
 	}
@@ -140,7 +142,7 @@ function flat_tree_dict(root_job,level, level_set, callback){
     ++level;
 	console.log("level "+level);
 	console.log("level_set "+level_set);
-    db.client.query("SELECT *  FROM job where super_id = $1 ",[root_job], function(err, result) {
+    db.client.query_job("SELECT *  FROM job where super_id = $1 ",[root_job], function(err, result) {
 	function each(row, next) {
 		console.log("dentro each row "+level);
 		if (level <= level_set){

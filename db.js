@@ -1,21 +1,40 @@
-var pg = require ('pg');
+var Knex  = require('knex');
 var config = require('./config');
 
 console.log("entre db connection");   
-console.log("config is "+config.url);
+console.log("config is "+config.url_job);
    
 
 module.exports.connectDatabase = function(callback){
-var client = new pg.Client(config.url);
-client.connect(function(err) {
-  if(err){
-     console.log(err);
-     process.exit(1);
-  }
+if (config.url_job.substring(0,6) == "postgr"){
+	 
+		Knex.job = Knex.initialize({
+		  client: 'pg',
+		  debug: true,
+		  connection: {
+    host     : '127.0.0.1',
+    user     : 'dpiscia',
+    password : 'Iris82Da',
+    database : 'paudm_post',
+    charset  : 'utf8',
+		  }
+		});
+	module.exports.client_job = Knex.job;
 
-  module.exports.client = client;
-  callback();
-});
+}
+else {
+Knex.job = Knex.initialize({
+		  client: 'sqlite3',
+		  debug: true,
+		  connection: {
+
+    filename : '/Users/dpiscia/sqlite_db/prova_bt.db',
+
+		  }
+		});
+	module.exports.client_job = Knex.job;
+	
+}
 };
 
 /**

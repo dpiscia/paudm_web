@@ -16,6 +16,7 @@ var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
 var db = require('./db');
 var security = require('./security');
+var config = require('./config');
 
 /**
  * Configuration
@@ -81,8 +82,9 @@ db.connectDatabase(function(){
 
   
   // Socket.io Communication
-io.sockets.on('connection', require('./routes/socket'));
-
+if (config.url_job.substring(0,6) == "dpostgr"){
+	io.sockets.on('connection', require('./routes/socket'));
+}
 
 /**
  * Start Server
