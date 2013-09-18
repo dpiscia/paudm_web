@@ -11,104 +11,144 @@
 /* jshint -W098 */
 /* jshint -W003 */
 var q = require('q');
-
 var db = require('../db');
-
-
 var async = require('async');
-exports.list = function(req, res){
-console.log("param all "+req.params.all);
-console.log("param id "+req.params.id);
-query_post(req.params.id,req.params.all).then(function(val) {
-  //console.log('Promise Resolved!', val);
-	res.send(val);
-});
-  
-};
+//jobs rest api
 
+//parameter all defined the recursive level of query:0 no recursive level. 1: one depth level query indefinite: all avaialable depth query
+exports.list = function(req, res)
+	{
+	console.log("param all "+req.params.all);
+	console.log("param id "+req.params.id);
+	query_post(req.params.id,req.params.all).then(function(val) 
+		{
+			res.send(val);
+		});  
+	};
+//quality control rest api
 exports.qc_list = function(req, res){
 	debugger;
 	console.log("qc api");
-	query_qc_post(req.params.id).then (function(val) {
-  //console.log('Promise Resolved!', val);
-	res.send(val);
-});
-};
-function query(){  
-	
-	var deferred = q.defer();
-	var db = new sqlite3.Database('/Users/dpiscia/.sqlite/prova.db');	
-	db.all("SELECT *  FROM job where super_id is NULL", function(err, rows) {
-		deferred.resolve(rows); }
-	); 
-	db.close();
-	return deferred.promise;
-	}
-function query_qc_post(id){  
-	
-	var deferred = q.defer();
-	db.client_pau.query("select * from quality_control  where job_id  = $1",[id],function(err, result) {
-    if(err) {	
-		return console.error('error running query', err);
-	}
-		console.log(result.rows);
-		deferred.resolve(result.rows);     
-	});
+	query_qc_post(req.params.id).then (function(val) 
+		{
+		res.send(val);
+		});
+	};
+
+function query_qc_post(id)
+	{  
+		var deferred = q.defer();
+		db.client_pau("quality_control").select().where('job_id',id).then  
+		(
+			function(resp) 
+			{
+				console.log(resp);
+				deferred.resolve(resp);
+			}, 
+			function(err) 
+			{
+  				console.log(err.message);
+			}
+		); 
 	return deferred.promise;
 	}  
 //select p.id , (select count(a.id) from job a where a.super_id = p.id) from job p
-function query_post(id,all){  
-var deferred = q.defer();
-console.log("entra");
-	if (id === undefined) {
-	db.client_job('job as p').select(db.client_job.raw('*, (select count(*) as nbr from job a where a.super_id = p.id)')).whereNull('super_id').then(function(resp) {
-  console.log(resp);
-  deferred.resolve(resp);
-}, function(err) {
-  console.log(err.message);
-});
- 
-}
-	else {
-		if (all === '1') {
-			console.log(recursive_query(id,1));
-			db.client_job.query(recursive_query(id,0), function(err, result) {
-	if(err) {
-		return console.error('error running query', err);
-    }
-	console.log(result.rows[0]);
-	deferred.resolve(result.rows);     
-});
-
-}
-
-		if (all === '0') {
-			console.log("left join query");
-			db.client_job.query("select * from job where id = $1",[id], function(err, result) {
-	if(err) {
-		return console.error('error running query', err);
-    }
-	console.log(result.rows[0]);
-	deferred.resolve(result.rows);     
-});
-
-}
-	else {
-		console.log(recursive_query(id,100));
-		db.client.query_job(recursive_query(id,100), function(err, result) {
-	if(err) {	
-		return console.error('error running query', err);
+function query_post(id,all)
+{  
+	var deferred = q.defer();
+	console.log("entra");
+	if (id === undefined) 
+	{
+		db.client_job('job as p').select(db.client_job.raw('*, (select count(*)  from job a where a.super_id = p.id) as nbr')).whereNull('super_id').then
+		(
+			function(resp) 
+			{
+				console.log(resp);
+				deferred.resolve(resp);
+			}, 
+			function(err) 
+			{
+  				console.log(err.message);
+			}
+		); 
 	}
-	deferred.resolve(result.rows);     
-	});
-/*console.log("nested")
-flat_tree_dict(id, 0,100, function (treeSet) {
-	console.log("lunghezza",treeSet.length);
-	console.log("lunghezza",treeSet[0].id);
-	deferred.resolve(treeSet);
-});*/
+	else 
+	{
+		if (all === '1') 
+		{  
+			if (false)
+			{
+				console.log(recursive_query(id,1));
+				db.client_job.raw(recursive_query(id,1)).then
+				( 
+					function(resp) 
+					{
+						
+						deferred.resolve(resp.rows);
+					}, 
+					function(err) 
+					{
+		  				console.log(err.message);
+					}
+				);
+			}
+			else
+			{
+				flat_tree_dict(id, 0,1, function (treeSet) 
+				{
+					console.log("lunghezza",treeSet.length);
+					console.log("lunghezza",treeSet[0].id);
+					deferred.resolve(treeSet);
+				});
+			}
+
+		}
+		if (all === '0') 
+		{
+			db.client_job('job').where("id",id).select().then
+			( 
+				function(resp) 
+				{
+					
+					deferred.resolve(resp);
+				}, 
+				function(err) 
+				{
+	  				console.log(err.message);
+				}
+			);
+
+		}
+		if (all === undefined) 
+		{  
+			if (false)
+			{
+				console.log(recursive_query(id,100));
+				db.client_job.raw(recursive_query(id,100)).then
+				( 
+					function(resp) 
+					{
+						
+						deferred.resolve(resp.rows);
+					}, 
+					function(err) 
+					{
+		  				console.log(err.message);
+					}
+				);
+			}
+			else
+			{
+				flat_tree_dict(id, 0,100, function (treeSet) 
+				{
+					console.log("lunghezza",treeSet.length);
+					console.log("lunghezza",treeSet[0].id);
+					deferred.resolve(treeSet);
+				});
+			}
+		}
+
 	}
-}
 return deferred.promise;
 }
  
@@ -129,36 +169,52 @@ function recursive_query(id,level) {
 ) select * from t   ;");	
 }
 /*jshint unused:true*/
-function flat_tree_dict(root_job,level, level_set, callback){
+function flat_tree_dict(root_job,level, level_set, callback)
+{
 	var treeSet = []; 
 	console.log("inside flat_Tree ID"+ root_job);
-	db.client_job.query("SELECT *  , (select count(*) as nbr from job a where a.super_id = p.id) FROM job p where p.id = $1 ",[root_job], function(err, result) {
-	if(err) {
-		return console.error('error running query', err);
-	}
-	console.log("before"+treeSet.length+" ID "+result.rows[0].id);
-	treeSet.push(result.rows[0]);    
-   });
+	db.client_job('job as p').select(db.client_job.raw('*, (select count(*) from job a where a.super_id = p.id) as nbr')).where('id',root_job).then
+	(
+		function(resp) 
+		{
+			console.log(resp);
+			treeSet.push(resp[0]); 
+		}, 
+		function(err) 
+		{
+			console.log(err.message);
+		}
+	); 
     ++level;
 	console.log("level "+level);
 	console.log("level_set "+level_set);
-    db.client.query_job("SELECT *  FROM job where super_id = $1 ",[root_job], function(err, result) {
-	function each(row, next) {
-		console.log("dentro each row "+level);
-		if (level <= level_set){
-			flat_tree_dict(row.id, level, level_set, function (subSet) {
-			treeSet = treeSet.concat(subSet);
-			next(null);
-			});
-		}
-		else {next(null);}
-	}
-	function done() {
-		console.log("1st callback");
-		callback(treeSet);
-    }
-	console.log("async call");
-	async.forEachSeries(result.rows, each, done);
-	});
+	db.client_job('job').where("super_id",root_job).select().then
+			( 
+				function(resp) 
+				{
+					function each(row, next) 
+					{
+						console.log("dentro each row "+level);
+						if (level <= level_set){
+							flat_tree_dict(row.id, level, level_set, function (subSet) {
+							treeSet = treeSet.concat(subSet);
+							next(null);
+							});
+						}
+						else {next(null);}
+					}
+					function done() {
+						console.log("1st callback");
+						callback(treeSet);
+				    }
+					console.log("async call");
+					async.forEachSeries(resp, each, done);
+				}, 
+				function(err) 
+				{
+	  				console.log(err.message);
+				}
+			);	
+
 }
 

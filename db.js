@@ -6,16 +6,16 @@ console.log("config is "+config.url_job);
    
 
 module.exports.connectDatabase = function(callback){
-if (config.url_job.substring(0,6) == "postgr"){
+if (config.job.client === "pg"){
 	 
 		Knex.job = Knex.initialize({
 		  client: 'pg',
 		  debug: true,
 		  connection: {
-    host     : '127.0.0.1',
-    user     : 'dpiscia',
-    password : 'Iris82Da',
-    database : 'paudm_post',
+    host     : config.job.host,
+    user     : config.job.user,
+    password : config.job.password,
+    database : config.job.name,
     charset  : 'utf8',
 		  }
 		});
