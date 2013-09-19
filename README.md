@@ -11,12 +11,16 @@ install the module dependencies
 cd paudm_web
 npm install
 ```
-Need to prepare a config.js file for DB connection
+Need to prepare a config.js file for DB connection, the dbs have to two in sqlite mode , and can be the same in postgres.
 ```javascript
 var config = {}
+//if postgresql use the below config scheme
+config.job = {client : "pg" , host : "host name", user : "user" , password : "pwd" , name : "db_name" }; 
 
-config.url = "postgresql://Username:password@hostname/db_name";
-
+config.pau= {client : "pg" , host : "host name", user : "user" , password : "pwd" , name : "db_name" }; 
+//if sqlite use the scheme belowe
+config.job = {client : "pg", name : "url/db_name"};
+config.pau = {client : "pg", name : "url/db_name"};
 module.exports = config;
 ```
 
