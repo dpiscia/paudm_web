@@ -27,7 +27,6 @@ exports.list = function(req, res)
 	};
 //quality control rest api
 exports.qc_list = function(req, res){
-	debugger;
 	console.log("qc api");
 	query_qc_post(req.params.id).then (function(val) 
 		{
@@ -47,7 +46,7 @@ function query_qc_post(id)
 			}, 
 			function(err) 
 			{
-  				console.log(err.message);
+				console.log(err.message);
 			}
 		); 
 	return deferred.promise;
@@ -68,7 +67,7 @@ function query_post(id,all)
 			}, 
 			function(err) 
 			{
-  				console.log(err.message);
+				console.log(err.message);
 			}
 		); 
 	}
@@ -88,7 +87,7 @@ function query_post(id,all)
 					}, 
 					function(err) 
 					{
-		  				console.log(err.message);
+						console.log(err.message);
 					}
 				);
 			}
@@ -114,7 +113,7 @@ function query_post(id,all)
 				}, 
 				function(err) 
 				{
-	  				console.log(err.message);
+					console.log(err.message);
 				}
 			);
 
@@ -133,7 +132,7 @@ function query_post(id,all)
 					}, 
 					function(err) 
 					{
-		  				console.log(err.message);
+						console.log(err.message);
 					}
 				);
 			}
@@ -206,13 +205,13 @@ function flat_tree_dict(root_job,level, level_set, callback)
 					function done() {
 						console.log("1st callback");
 						callback(treeSet);
-				    }
+					}
 					console.log("async call");
 					async.forEachSeries(resp, each, done);
 				}, 
 				function(err) 
 				{
-	  				console.log(err.message);
+					console.log(err.message);
 				}
 			);	
 

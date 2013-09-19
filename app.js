@@ -82,7 +82,7 @@ db.connectDatabase(function(){
 
   
   // Socket.io Communication
-if (config.url_job.substring(0,6) == "dpostgr"){
+if (config.job.client  === "dpostgr"){
 	io.sockets.on('connection', require('./routes/socket'));
 }
 
