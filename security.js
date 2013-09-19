@@ -99,7 +99,7 @@ module.exports.strategy  = passport.use(new
       // authenticated `user`.
       
       findByUsername(username, function(err, user) {
-		console.log("does not wait");
+console.log("does not wait");
         if (err) { return done(err); }
         if (!user) { return done(null, false, { message: 'Unknown user ' + username }); }
         console.log(password);

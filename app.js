@@ -68,6 +68,10 @@ app.get('/api/qc/:id', api.qc_list);
 app.get('/login', function(req, res){
   res.render('login', { user: req.user, message: req.flash('error') });
 });
+app.get('/logout', function(req, res){
+  req.logout();
+  res.redirect('/');
+});
 
 app.post('/login', 
   passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }),
