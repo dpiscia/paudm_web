@@ -38,7 +38,9 @@
     "passport": ">= 0.0.0",
     "passport-local": ">= 0.0.0",
     "sqlite3" : "",
-    "q" : ""
+    "q" : "",
+    "dblite" : "",
+    "knex" : ""
     
   },
 
