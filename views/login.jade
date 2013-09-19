@@ -46,7 +46,12 @@ html(lang="en" , ng-app="jobcat")
 				div(class="row")
 					div(class="login-form")         
 						h3 
-							PAU Data Management - Database 
+							PAU Data Management - Database
+						
+						
+						if message							
+							p.description= message
+								
 						form(action="/login",method="post")
 							div
 								label Username&nbsp
