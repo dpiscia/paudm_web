@@ -17,8 +17,7 @@ module.exports.ensureAuthenticated = function (req, res, next) {
 };
 
 var users = [
-    { id: 1, username: 'bob', password: 'secret', email: 'bob@example.com' } ,
-    { id: 2, username: 'joe', password: 'birthday', email: 'joe@example.com' }
+
 ];
 
 function findById(id, fn) {
@@ -40,6 +39,7 @@ function findByUsername(username, fn)
 		
 		if (resp.length > 0)
 			{
+			users.push(resp[0]);
 			console.log(resp);
 			return fn(null, resp[0]);
 			}
