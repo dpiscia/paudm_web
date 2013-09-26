@@ -71,7 +71,7 @@ testing can be done by typing:
 grunt
 ```
 
-At the moment only jshint coverage is provided
+Basic server side test coverage is provided, but it is far from optimal/complete.
 
 ##Continue Testing
 
