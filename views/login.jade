@@ -46,7 +46,12 @@ html(lang="en" , ng-app="jobcat")
 				div(class="row")
 					div(class="login-form")         
 						h3 
-							PAU Data Management - Database 
+							PAU Data Management - Database
+						
+						
+						if message							
+							p.description= message
+								
 						form(action="/login",method="post")
 							div
 								label Username&nbsp
@@ -57,5 +62,6 @@ html(lang="en" , ng-app="jobcat")
 									input(type="password",name="password")
 							div
 								input(class="btn btn-primary", type="submit",value="Submit")
+								a(class="btn btn-default",style="position:relative; left:140px", type="button", href='/register') Register
 						p 
 							small Hint - bob:secret
