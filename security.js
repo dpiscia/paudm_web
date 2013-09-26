@@ -9,7 +9,7 @@
 
 var passport = require('passport'), 
 	LocalStrategy = require('passport-local').Strategy;
-
+var db = require('./db');
 	
 module.exports.ensureAuthenticated = function (req, res, next) {
   if (req.isAuthenticated()) { return next(); }
@@ -17,8 +17,7 @@ module.exports.ensureAuthenticated = function (req, res, next) {
 };
 
 var users = [
-    { id: 1, username: 'bob', password: 'secret', email: 'bob@example.com' } ,
-    { id: 2, username: 'joe', password: 'birthday', email: 'joe@example.com' }
+
 ];
 
 function findById(id, fn) {
@@ -30,15 +29,40 @@ function findById(id, fn) {
   }
 }
 
-function findByUsername(username, fn) {
-  for (var i = 0, len = users.length; i < len; i++) {
+function findByUsername(username, fn) 
+{
+	db.client_pau("user").select().where('email',username).then  
+	(
+		function(resp) 
+		{	
+		console.log("entra resp");
+		
+		if (resp.length > 0)
+			{
+			users.push(resp[0]);
+			console.log(resp);
+			return fn(null, resp[0]);
+			}
+		else
+			{
+			return fn(null, null);
+			}
+		}, 
+		function(err) 
+		{
+			console.log(err.message);
+			return fn(null, null);
+		}
+	); 
+}
+/*  for (var i = 0, len = users.length; i < len; i++) {
     var user = users[i];
     if (user.username === username) {
       return fn(null, user);
     }
   }
   return fn(null, null);
-}
+}*/
 
 
 // Passport session setup.
@@ -75,8 +99,11 @@ module.exports.strategy  = passport.use(new
       // authenticated `user`.
       
       findByUsername(username, function(err, user) {
+console.log("does not wait");
         if (err) { return done(err); }
         if (!user) { return done(null, false, { message: 'Unknown user ' + username }); }
+        console.log(password);
+        console.log(user.password);
         if (user.password !== password) { return done(null, false, { message: 'Invalid password' }); }
         return done(null, user);
       });

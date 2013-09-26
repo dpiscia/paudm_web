@@ -13,6 +13,7 @@
 var q = require('q');
 var db = require('../db');
 var async = require('async');
+var config = require('../config');
 //jobs rest api
 
 //parameter all defined the recursive level of query:0 no recursive level. 1: one depth level query indefinite: all avaialable depth query
@@ -75,7 +76,7 @@ function query_post(id,all)
 	{
 		if (all === '1') 
 		{  
-			if (false)
+			if (config.job.client === "pg")
 			{
 				console.log(recursive_query(id,1));
 				db.client_job.raw(recursive_query(id,1)).then
@@ -118,9 +119,9 @@ function query_post(id,all)
 			);
 
 		}
-		if (all === undefined) 
+		if (all === 'All') 
 		{  
-			if (false)
+			if (config.job.client === "pg")
 			{
 				console.log(recursive_query(id,100));
 				db.client_job.raw(recursive_query(id,100)).then
