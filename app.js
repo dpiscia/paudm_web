@@ -82,9 +82,9 @@ app.post('/login',
     res.redirect('/');
   });
   
-db.connectDatabase(function(){
-  console.log("connected to DB");// your other code
-});
+db.connectDatabase(config);
+  
+
 
   
   // Socket.io Communication

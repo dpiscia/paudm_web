@@ -1,11 +1,13 @@
 var Knex  = require('knex');
-var config = require('./config');
+
 
 console.log("entre db connection");   
-console.log("config is "+config.job.client);
+
    
 
-module.exports.connectDatabase = function(){
+module.exports.connectDatabase = function(config){
+console.log("initialize");
+console.log("config is "+config.job.client);
 if (config.job.client === "pg")
 	{
 	 

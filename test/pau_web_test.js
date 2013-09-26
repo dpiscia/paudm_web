@@ -1,12 +1,13 @@
 'use strict';
 
 var db = require('../db');
+var config = require('./config_test');
 
 
 
 module.exports = {
     setUp: function (callback) {
-        db.connectDatabase();
+        db.connectDatabase(config);
         callback();
     },
     tearDown: function (callback) {
