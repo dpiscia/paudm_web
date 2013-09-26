@@ -2,7 +2,7 @@ var Knex  = require('knex');
 var config = require('./config');
 
 console.log("entre db connection");   
-console.log("config is "+config.url_job);
+console.log("config is "+config.job.client);
    
 
 module.exports.connectDatabase = function(){
