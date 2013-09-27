@@ -17,7 +17,7 @@ var config = require('../config');
 //jobs rest api
 
 //parameter all defined the recursive level of query:0 no recursive level. 1: one depth level query indefinite: all avaialable depth query
-exports.list = function(req, res)
+module.exports.list = function(req, res)
 	{
 	console.log("param all "+req.params.all);
 	console.log("param id "+req.params.id);
@@ -27,7 +27,7 @@ exports.list = function(req, res)
 		});  
 	};
 //quality control rest api
-exports.qc_list = function(req, res){
+module.exports.qc_list = function(req, res){
 	console.log("qc api");
 	query_qc_post(req.params.id).then (function(val) 
 		{
