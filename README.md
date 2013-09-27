@@ -12,6 +12,7 @@ cd paudm_web
 npm install
 ```
 Need to prepare a config.js file for DB connection, the dbs have to two in sqlite mode , and can be the same in postgres.
+If you run grunt, then some sqlite db files will be created in folder test, you can eventually use these dbs as starting point
 ```javascript
 var config = {}
 //if postgresql use the below config scheme
