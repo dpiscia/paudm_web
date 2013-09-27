@@ -11,7 +11,9 @@ install the module dependencies
 cd paudm_web
 npm install
 ```
-Need to prepare a config.js file for DB connection, the dbs have to two in sqlite mode , and can be the same in postgres.
+Need to prepare a config.js file for DB connection, the dbs have to two in sqlite mode ,
+and can be the same in postgres.
+
 If you run grunt, then some sqlite db files will be created in folder test, you can eventually use these dbs as starting point
 ```javascript
 var config = {}
@@ -31,7 +33,8 @@ module.exports = config;
 ### Triggers
 in order to synchronize server to DB , some triggers have to be set on the DB side:
 
-these sync is incompatible with two phase commits transaction. In this situation an alternative
+these sync is incompatible with two phase commits transaction. 
+In this situation an alternative
 can be represented by using REDIS as message broker.
 
 ```javascript
