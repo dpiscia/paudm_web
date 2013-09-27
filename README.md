@@ -1,6 +1,6 @@
 # pau_web [![Build Status](https://secure.travis-ci.org/dpiscia/paudm_web.png?branch=master)](http://travis-ci.org/dpiscia/paudm_web)
 
-
+Data visualization (tree data-structure) web app
 
 ## Getting Started
 clone the  git module with: `git clone https://github.com/dpiscia/paudm_web`
