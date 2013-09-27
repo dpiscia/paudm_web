@@ -26,14 +26,14 @@ module.exports.reg = function(req, res){
     var errors = req.validationErrors();  
     if( !errors){   //No errors were found.  Passed Validation!
 	console.log("correct");
-	;
+	
 	db.client_pau('user').insert({'email' : req.body.email, 'name' : req.body.First_name, 'surname' : req.body.Last_name, 'password' : req.body.Password, 'permissions' : 1, 'validated' : true}).then(
 	function(resp) {
 			console.log(resp);
 			res.render('register',{'message' : 'Registration OK'} );
 				}, 
 	function(err) {
-  			res.render('register',{'message' : 'DB error'} );
+			res.render('register',{'message' : 'DB error'} );
 });
     res.render('register',{'message' : 'Registration OK'} );
     }
