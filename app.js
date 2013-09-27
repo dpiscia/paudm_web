@@ -6,10 +6,12 @@
 
 var express = require('express'),
   routes = require('./routes'),
+  register = require('./routes/register'),
   api = require('./routes/api'),
   path = require('path'),
   flash = require('connect-flash'),
-  passport = require('passport');
+  passport = require('passport'),
+  expressValidator = require('express-validator');
 
 var app = module.exports = express();
 var server = require('http').createServer(app);
@@ -29,7 +31,9 @@ app.set('view engine', 'jade');
 app.use(express.logger('dev'));
 app.use(express.cookieParser());
 app.use(express.bodyParser());
+app.use(expressValidator());
 app.use(express.methodOverride());
+
 app.use(express.session({ secret: 'keyboard cat' }));
   // Initialize Passport!  Also use passport.session() middleware, to support
   // persistent login sessions (recommended).
@@ -73,7 +77,7 @@ app.get('/logout', function(req, res){
   res.redirect('/');
 });
 app.get('/register', function(req, res){
-  res.render('register');
+  res.render('register' );
 });
 app.post('/login', 
   passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }),
@@ -81,10 +85,11 @@ app.post('/login',
 	console.log("redirect");
     res.redirect('/');
   });
+ 
+app.post('/register',register.reg);
+db.connectDatabase(config);
   
-db.connectDatabase(function(){
-  console.log("connected to DB");// your other code
-});
+
 
   
   // Socket.io Communication
