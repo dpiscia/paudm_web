@@ -33,7 +33,7 @@ module.exports = config;
 ### Triggers
 in order to synchronize server to DB , some triggers have to be set on the DB side:
 
-these sync is incompatible with two phase commits transaction. 
+this sync is incompatible with two phase commits transaction. 
 In this situation an alternative
 can be represented by using REDIS as message broker.
 
