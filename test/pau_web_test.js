@@ -48,3 +48,10 @@ module.exports = {
 		});
     }*/
 };
+
+//TODO create table job,user and quality control
+// 1: create a user
+//2: create a simple tree job structure
+//3: attach a quality control to the jobs
+//4 test the rest apis
+//5 test client side

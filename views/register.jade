@@ -1,0 +1,32 @@
+doctype 5
+html(lang="en" , ng-app="jobcat")
+	head
+		title= "login"
+		link(rel="stylesheet" ,href="/css/bootstrap.min.css")
+		div(class="container")
+			div(class="row-fluid")                 
+				div(class="span12")		
+					form(class="form-horizontal", method="post", action="/register")
+						div(class="heading")
+							h4(class="form-heading") Sign Up
+						div(class="control-group")
+							label(class="control-label" ,for="Email ") Email	
+							div(class="controls")
+									input(name = "email", type="text" , id="Email" ,placeholder="company@email.com")
+						div(class="control-group")
+								label(class="control-label" ,for="inputFirst") First Name
+								div(class="controls")
+									input(name = "First_name", type="text" ,id="inputFirst", placeholder="E.g. Ashwin")  
+						div(class="control-group")
+								label(class="control-label" ,for="Last Name") Last Name
+								div(class="controls")
+									input(name = "Last_name",type="text" ,id="inputFirst", placeholder="E.g. Ashwin")       
+						div(class="control-group")
+								label( class="control-label" ,for="Password") Password
+								div(class="controls")
+									input(name = "Password", type="password" ,id="inputFirst")                  
+						div(class="form-actions")
+							button(type="submit",class="btn btn-large btn-primary") Register
+						if message							
+							p.description= message
+	
