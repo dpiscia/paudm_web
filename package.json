@@ -40,7 +40,8 @@
     "sqlite3" : "",
     "q" : "",
     "dblite" : "",
-    "knex" : ""
+    "knex" : "",
+    "express-validator": ""
     
   },
 
