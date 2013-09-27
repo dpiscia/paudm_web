@@ -30,6 +30,7 @@ module.exports = function(grunt) {
         src: ['test/**/*.js']
       },
     },
+
     watch: {
       gruntfile: {
         files: '<%= jshint.gruntfile.src %>',
@@ -50,8 +51,9 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-nodeunit');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
-
-
+  grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.file.delete('test/test_DB_pau');
+  grunt.file.delete('test/test_DB_job');
   // Default task.
   grunt.registerTask('default', ['jshint', 'nodeunit']);
 

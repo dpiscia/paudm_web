@@ -37,30 +37,43 @@ module.exports = {
     test_create_quality_control : function(test) 
     {
 		
-		db.client_pau.schema.createTable('quality_control', function (table) {
-			table.integer('job_id');
-			table.string('ref');
-			table.string('check_name');
-			table.float('min_value');
-			table.float('max_value');
-			table.float('value');
-			table.string('unit');
-			table.boolean('qc_pass');
-			table.timestamps('time');
-			})
-			.then(function(val) {
-			console.log(val);
-			console.log("OK table created");
-			test.equals(true, true);
-			test.done();
-			}, 
-			function(err) {
-			console.log(err);
-			console.log("Err");
-			test.equals(false, true);
-			test.done();
+		db.client_pau.schema.hasTable('quality_control').then(function(exists) {
+			if (!exists) 
+			{
+				return db.client_pau.schema.createTable('quality_control', function (table) 
+				{
+					table.integer('job_id');
+					table.string('ref');
+					table.string('check_name');
+					table.float('min_value');
+					table.float('max_value');
+					table.float('value');
+					table.string('unit');
+					table.boolean('qc_pass');
+					table.timestamps('time');
+				})
+				.then(
+					function(val) 
+					{
+						console.log(val);
+						console.log("OK table created");
+						test.equals(true, true);
+						test.done();
+					}, 
+					function(err) 
+					{
+						console.log(err);
+						console.log("Err");
+						test.equals(false, true);
+						test.done();
+					}
+					);
 			}
-		);
+			else { 
+						test.equals(true, true);
+						test.done();
+				}
+		});
     },
     test_insert_quality_control : function(test) 
     {
@@ -80,7 +93,77 @@ module.exports = {
 			test.done();
 			}
 		);
-    }
+    },
+     test_create_job_table : function(test) 
+    {
+		db.client_job.schema.hasTable('job').then(function(exists) {
+			if (!exists) 
+			{
+			return db.client_job.schema.createTable('job', function (table) {
+					table.integer('super_id');
+					table.string('task');
+					table.string('status');
+					table.text('config');
+					table.text('input');
+					table.text('output');
+					table.dateTime('ts_created');
+					table.dateTime('ts_queued');
+					table.dateTime('ts_started');
+					table.dateTime('ts_ended');
+			})
+			.then(function(val) {
+			console.log(val);
+			console.log("OK table created");
+			test.equals(true, true);
+			test.done();
+			}, 
+			function(err) {
+			console.log(err);
+			console.log("Err");
+			test.equals(false, true);
+			test.done();
+			}
+		);
+	}
+		else { 
+						test.equals(true, true);
+						test.done();
+				}
+		});
+	},
+     test_create_user_table : function(test) 
+    {
+		db.client_pau.schema.hasTable('user').then(function(exists) {
+			if (!exists) 
+			{
+			return db.client_pau.schema.createTable('user', function (table) {
+					table.string('email');
+					table.string('name');
+					table.string('surname');
+					table.string('password');
+					table.integer('permissions');
+					table.boolean('validated');
+			})
+			.then(function(val) {
+			console.log(val);
+			console.log("OK table created");
+			test.equals(true, true);
+			test.done();
+			}, 
+			function(err) {
+			console.log(err);
+			console.log("Err");
+			test.equals(false, true);
+			test.done();
+			}
+		);
+	}
+		else { 
+						test.equals(true, true);
+						test.done();
+				}
+		});
+	}
 };
 
 //TODO create table job,user and quality control
