@@ -14,7 +14,7 @@ npm install
 You need to prepare a config.js file for DB connection, the dbs have to be two in sqlite mode ,
 and can be only one in postgres.
 
-If you run grunt, then some sqlite db files will be created in folder test, you can eventually use these dbs as starting point
+If you run grunt, then two sqlite db files will be created in test folder, you can eventually use these dbs as starting point
 ```javascript
 var config = {}
 //if postgresql use the below config scheme
