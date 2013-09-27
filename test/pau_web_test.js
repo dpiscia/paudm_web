@@ -33,20 +33,54 @@ module.exports = {
 			
 		); 
 		
-    }/*,
-    test_Create_quality_control : function(test) 
+    },
+    test_create_quality_control : function(test) 
     {
-    db.client_pau.transaction(function(t) 
-		{
-		db.client_pau("quality_control")
-			.transacting(t)
-			.insert({job_id : 100000, ref : "prova", check_name : "prova_anme", min_value : 50, max_value : 60, value : 40, unit : "m", qc_pass : true, time : "2013-09-09"})
-			.then(function() {
-			t.commit('You saved 3 books');
-			}, t.rollback);
+		
+		db.client_pau.schema.createTable('quality_control', function (table) {
+			table.integer('job_id');
+			table.string('ref');
+			table.string('check_name');
+			table.float('min_value');
+			table.float('max_value');
+			table.float('value');
+			table.string('unit');
+			table.boolean('qc_pass');
+			table.timestamps('time');
+			})
+			.then(function(val) {
+			console.log(val);
+			console.log("OK table created");
+			test.equals(true, true);
 			test.done();
-		});
-    }*/
+			}, 
+			function(err) {
+			console.log(err);
+			console.log("Err");
+			test.equals(false, true);
+			test.done();
+			}
+		);
+    },
+    test_insert_quality_control : function(test) 
+    {
+		
+		db.client_pau("quality_control")
+			.insert({job_id : 100000, ref : "prova", check_name : "prova_anme", min_value : 50, max_value : 60, value : 40, unit : "m", qc_pass : true})
+			.then(function(val) {
+			console.log(val);
+			console.log("OK");
+			test.equals(true, true);
+			test.done();
+			}, 
+			function(err) {
+			console.log(err);
+			console.log("Err");
+			test.equals(false, true);
+			test.done();
+			}
+		);
+    }
 };
 
 //TODO create table job,user and quality control
