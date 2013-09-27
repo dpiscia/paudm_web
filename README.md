@@ -31,7 +31,7 @@ module.exports = config;
 
 
 ### Triggers
-in order to synchronize server to DB , some triggers have to be set on the DB side:
+in order to synchronize server to DB , some triggers have to be set on the DB side (it works only with postgresql) :
 
 this sync is incompatible with two phase commits transaction. 
 In this situation an alternative
