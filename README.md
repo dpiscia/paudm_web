@@ -1,6 +1,7 @@
 # pau_web [![Build Status](https://secure.travis-ci.org/dpiscia/paudm_web.png?branch=master)](http://travis-ci.org/dpiscia/paudm_web)
 
-Data visualization (tree data-structure) web app
+Data visualization (tree data-structure) web app,
+backend is built on node.js for rest api and websocket communication, while admin backend is written in python (Django/Flask), client is based on angularjs,d3.js.
 
 ## Getting Started
 clone the  git module with: `git clone https://github.com/dpiscia/paudm_web`
