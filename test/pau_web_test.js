@@ -131,12 +131,33 @@ module.exports = {
 				}
 		});
 	},
+	test_insert_jobs : function(test) 
+    {
+		
+		db.client_job("job")
+			.insert([{super_id : "", task : "prova", config : "config", input : "input", output : "40", ts_created : "12/12/12", ts_queued : "12/12/12",ts_started : "12/12/12",ts_ended : "12/12/12", },
+			{super_id : 1, task : "child", config : "config", input : "input", output : "40", ts_created : "12/12/12", ts_queued : "12/12/12",ts_started : "12/12/12",ts_ended : "12/12/12", }])
+			.then(function(val) {
+			console.log(val);
+			console.log("OK");
+			test.equals(true, true);
+			test.done();
+			}, 
+			function(err) {
+			console.log(err);
+			console.log("Err");
+			test.equals(false, true);
+			test.done();
+			}
+		);
+    },
      test_create_user_table : function(test) 
     {
 		db.client_pau.schema.hasTable('user').then(function(exists) {
 			if (!exists) 
 			{
 			return db.client_pau.schema.createTable('user', function (table) {
+					table.integer('id');
 					table.string('email');
 					table.string('name');
 					table.string('surname');

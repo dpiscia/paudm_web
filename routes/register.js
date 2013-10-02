@@ -32,10 +32,10 @@ module.exports.reg = function(req, res){
 			console.log(resp);
 			res.render('register',{'message' : 'Registration OK'} );
 				}, 
-	function(err) {
+	function(err) { console.log(err);
 			res.render('register',{'message' : 'DB error'} );
 });
-    res.render('register',{'message' : 'Registration OK'} );
+    //res.render('register',{'message' : errors.msg} );
     }
     else {   //Display errors to user
 		console.log(errors);
