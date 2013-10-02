@@ -97,7 +97,7 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ##Admin
 
-the admin is implemented by Django/bootsrapped, from the amdin users can be managed
+the admin is implemented by Django/bootsrapped, or by flask, a django-inspired framewrok not-opinionated and orm-flexible
 
 ## Release History
 pre-release(pre-vacations) v 0.0.1 
