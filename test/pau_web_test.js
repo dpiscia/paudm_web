@@ -137,8 +137,9 @@ module.exports = {
     {
 		
 		db.client_job("job")
-			.insert([{ task : "prova", config : "config", input : "input", output : "40", ts_created : "12/12/12", ts_queued : "12/12/12",ts_started : "12/12/12",ts_ended : "12/12/12", },
-			{super_id : 1, task : "child", config : "config", input : "input", output : "40", ts_created : "12/12/12", ts_queued : "12/12/12",ts_started : "12/12/12",ts_ended : "12/12/12", }])
+			.insert([{ task : "example_task", config : "config", status : "DONE", input : "input", output : "40", ts_created : "12/12/12", ts_queued : "12/12/12",ts_started : "12/12/12",ts_ended : "12/12/12", },
+			{super_id : 1, task : "example_child", config : "config", status : "DONE", input : "input", output : "40", ts_created : "12/12/12", ts_queued : "12/12/12",ts_started : "12/12/12",ts_ended : "12/12/12", },
+			super_id : 1, task : "example_child_2", config : "config", status : "FAILED", input : "input", output : "40", ts_created : "12/12/12", ts_queued : "12/12/12",ts_started : "12/12/12",ts_ended : "12/12/12", }])
 			.then(function(val) {
 			console.log(val);
 			console.log("OK");
