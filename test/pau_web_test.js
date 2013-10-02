@@ -42,6 +42,7 @@ module.exports = {
 			{
 				return db.client_pau.schema.createTable('quality_control', function (table) 
 				{
+					table.increments('id').primary();
 					table.integer('job_id');
 					table.string('ref');
 					table.string('check_name');
@@ -100,6 +101,7 @@ module.exports = {
 			if (!exists) 
 			{
 			return db.client_job.schema.createTable('job', function (table) {
+					table.increments('id').primary();
 					table.integer('super_id');
 					table.string('task');
 					table.string('status');
@@ -135,7 +137,7 @@ module.exports = {
     {
 		
 		db.client_job("job")
-			.insert([{super_id : "", task : "prova", config : "config", input : "input", output : "40", ts_created : "12/12/12", ts_queued : "12/12/12",ts_started : "12/12/12",ts_ended : "12/12/12", },
+			.insert([{ task : "prova", config : "config", input : "input", output : "40", ts_created : "12/12/12", ts_queued : "12/12/12",ts_started : "12/12/12",ts_ended : "12/12/12", },
 			{super_id : 1, task : "child", config : "config", input : "input", output : "40", ts_created : "12/12/12", ts_queued : "12/12/12",ts_started : "12/12/12",ts_ended : "12/12/12", }])
 			.then(function(val) {
 			console.log(val);
@@ -157,7 +159,7 @@ module.exports = {
 			if (!exists) 
 			{
 			return db.client_pau.schema.createTable('user', function (table) {
-					table.integer('id');
+					table.increments('id').primary();
 					table.string('email');
 					table.string('name');
 					table.string('surname');
