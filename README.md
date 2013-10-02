@@ -18,12 +18,12 @@ If you run grunt, then two sqlite db files will be created in test folder, you c
 ```javascript
 var config = {}
 //if postgresql use the below config scheme
-config.job = {client : "pg" , host : "host name", user : "user" , password : "pwd" , name : "db_name" }; 
+//config.job = {client : "pg" , host : "host name", user : "user" , password : "pwd" , name : "db_name" }; 
 
-config.pau= {client : "pg" , host : "host name", user : "user" , password : "pwd" , name : "db_name" }; 
+//config.pau= {client : "pg" , host : "host name", user : "user" , password : "pwd" , name : "db_name" }; 
 //if sqlite use the scheme belowe
-config.job = {client : "pg", name : "url/db_name"};
-config.pau = {client : "pg", name : "url/db_name"};
+config.job = {client : "sqlite", name : "url/db_name"};
+config.pau = {client : "sqlite", name : "url/db_name"};
 module.exports = config;
 ```
 
@@ -72,6 +72,11 @@ CREATE TRIGGER delete_table_trigger AFTER DELETE ON job
 FOR EACH ROW EXECUTE PROCEDURE old_notify_trigger();
 ```
 ## Testing
+
+install grunt:
+
+npm install -g grunt-cli
+
 
 testing can be done by typing:
 ```shell
