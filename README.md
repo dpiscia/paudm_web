@@ -95,6 +95,10 @@ _(Coming soon)_
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
+##Admin
+
+the admin is implemented by Django/bootsrapped, from the amdin users can be managed
+
 ## Release History
 pre-release(pre-vacations) v 0.0.1 
 
@@ -105,3 +109,5 @@ https://github.com/dpiscia/paudm_web/releases
 ## License
 Copyright (c) 2013 PAUDM-team  
 Licensed under the MIT license.
+
+
