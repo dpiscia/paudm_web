@@ -73,6 +73,11 @@ FOR EACH ROW EXECUTE PROCEDURE old_notify_trigger();
 ```
 ## Testing
 
+install grunt:
+
+npm install -g grunt-cli
+
+
 testing can be done by typing:
 ```shell
 grunt
