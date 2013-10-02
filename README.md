@@ -22,8 +22,8 @@ var config = {}
 
 //config.pau= {client : "pg" , host : "host name", user : "user" , password : "pwd" , name : "db_name" }; 
 //if sqlite use the scheme belowe
-config.job = {client : "sqlite", name : "url/db_name"};
-config.pau = {client : "sqlite", name : "url/db_name"};
+config.job = {client : "sqlite", name : "test/test_DB_job"};
+config.pau = {client : "sqlite", name : "test/test_DB_pau"};
 module.exports = config;
 ```
 
