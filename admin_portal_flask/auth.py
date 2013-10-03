@@ -16,33 +16,34 @@ app.config['SECRET_KEY'] = '123456790'
 # Create in-memory database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.sqlite'
 app.config['SQLALCHEMY_ECHO'] = True
-db = SQLAlchemy(app)
+#db = SQLAlchemy(app)
+from model import User,init, recreate
 
 
 # Create user model. For simplicity, it will store passwords in plain text.
 # Obviously that's not right thing to do in real world application.
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    login = db.Column(db.String(80), unique=True)
-    email = db.Column(db.String(120))
-    password = db.Column(db.String(64))
+#class User(db.Model):
+#    id = db.Column(db.Integer, primary_key=True)
+#    login = db.Column(db.String(80), unique=True)
+#    email = db.Column(db.String(120))
+#    password = db.Column(db.String(64))
 
-    # Flask-Login integration
-    def is_authenticated(self):
-        return True
+#    # Flask-Login integration
+#    def is_authenticated(self):
+#        return True
 
-    def is_active(self):
-        return True
+#    def is_active(self):
+#        return True
 
-    def is_anonymous(self):
-        return False
+#    def is_anonymous(self):
+#        return False
 
-    def get_id(self):
-        return self.id
+#    def get_id(self):
+#        return self.id
 
-    # Required for administrative interface
-    def __unicode__(self):
-        return self.username
+#    # Required for administrative interface
+#    def __unicode__(self):
+#        return self.username
 
 
 # Define login and registration forms (for flask-login)
@@ -60,7 +61,9 @@ class LoginForm(form.Form):
             raise validators.ValidationError('Invalid password')
 
     def get_user(self):
-        return db.session.query(User).filter_by(login=self.login.data).first()
+    	print self.login.data
+    	
+        return db_session.query(User).filter_by(login=self.login.data).first()
 
 
 class RegistrationForm(form.Form):
@@ -69,7 +72,7 @@ class RegistrationForm(form.Form):
     password = fields.PasswordField(validators=[validators.required()])
 
     def validate_login(self, field):
-        if db.session.query(User).filter_by(login=self.login.data).count() > 0:
+        if db_session.query(User).filter_by(login=self.login.data).count() > 0:
             raise validators.ValidationError('Duplicate username')
 
 
@@ -81,7 +84,7 @@ def init_login():
     # Create user loader function
     @login_manager.user_loader
     def load_user(user_id):
-        return db.session.query(User).get(user_id)
+        return db_session.query(User).get(user_id)
 
 
 # Create customized model view class
@@ -115,19 +118,15 @@ def login_view():
 
 @app.route('/register/', methods=('GET', 'POST'))
 def register_view():
-    form = RegistrationForm(request.form)
-    if helpers.validate_form_on_submit(form):
-        user = User()
-
-        form.populate_obj(user)
-
-        db.session.add(user)
-        db.session.commit()
-
-        login.login_user(user)
-        return redirect(url_for('index'))
-
-    return render_template('form.html', form=form)
+	form = RegistrationForm(request.form)
+	if helpers.validate_form_on_submit(form):
+		user = User()
+		form.populate_obj(user)
+		db_session.add(user)
+		db_session.commit()
+		login.login_user(user)
+ 		return redirect(url_for('index'))
+	return render_template('form.html', form=form)
 
 
 @app.route('/logout/')
@@ -137,16 +136,15 @@ def logout_view():
 
 if __name__ == '__main__':
     # Initialize flask-login
-    init_login()
-
+	init_login()
+	db_session = init('sqlite:///test.sqlite')
+	
     # Create admin
-    admin = admin.Admin(app, 'Auth', index_view=MyAdminIndexView())
-
+	admin = admin.Admin(app, 'Auth', index_view=MyAdminIndexView())
     # Add view
-    admin.add_view(MyModelView(User, db.session))
-
+	admin.add_view(MyModelView(User, db_session))
     # Create DB
-    db.create_all()
-
+    #db.create_all()
+	#recreate()
     # Start app
-    app.run(debug=True)
+	app.run(debug=True)
