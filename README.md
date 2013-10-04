@@ -100,7 +100,7 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 the admin is implemented by Django/bootsrapped, or by flask, a django-inspired framewrok not-opinionated and orm-flexible
 At the moment session will not be shared between the two backends, but it's possibile to use REdis and share it.
-From the flask admin it's possibile to re-use 100% the sqlalchemy model already defined for scientific pipelines.
+From the flask admin it's possibile to re-use 100% of the sqlalchemy model already defined for scientific pipelines.
 ## Release History
 pre-release(pre-vacations) v 0.0.1 
 
