@@ -93,6 +93,7 @@ db.connectDatabase(config);
 
   
   // Socket.io Communication
+  // Sync work only with two-phases commit disabled in postgresql
 if (config.job.client  === "dpostgr"){
 	io.sockets.on('connection', require('./routes/socket'));
 }
