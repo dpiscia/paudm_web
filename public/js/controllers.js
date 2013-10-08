@@ -22,6 +22,7 @@ function JobListCtrl($scope, $filter, $timeout,  Job, socket, $location, BreadCr
 	//1.callback on d3.plot, in the future implement on promise
 	//2. implement callback on failure
 	$scope.jobs = data;
+	
 	console.log('success, got data: ');
 	sync_filter();
 	});
