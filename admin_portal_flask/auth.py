@@ -6,12 +6,12 @@ from wtforms import form, fields, validators
 from flask.ext import admin, login
 from flask.ext.admin.contrib import sqla
 from flask.ext.admin import helpers
-
+from redis_session import RedisSessionInterface
 # Create Flask application
 app = Flask(__name__)
 
 # Create dummy secrey key so we can use sessions
-app.config['SECRET_KEY'] = '123456790'
+app.config['SECRET_KEY'] = 'keyboard cat'
 
 # Create in-memory database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.sqlite'
@@ -83,6 +83,7 @@ def index():
 
 @app.route('/login/', methods=('GET', 'POST'))
 def login_view():
+    print request.cookies
     form = LoginForm(request.form)
     if helpers.validate_form_on_submit(form):
         user = form.get_user()
@@ -107,6 +108,8 @@ def register_view():
 
 @app.route('/logout/')
 def logout_view():
+    #print "on logout"+ request.cookies	
+    print request.session
     login.logout_user()
     return redirect(url_for('index'))
 
@@ -120,7 +123,8 @@ if __name__ == '__main__':
     # Add view
 	admin.add_view(MyModelView(User, db_session))
     # Create DB
-    #db.create_all()
+     #db.create_all()
 	#recreate()
     # Start app
+        app.session_interface = RedisSessionInterface()
 	app.run(debug=True)
