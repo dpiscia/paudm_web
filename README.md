@@ -12,7 +12,7 @@ install the module dependencies
 cd paudm_web
 npm install
 ```
-You need to prepare a config file for DB connection, the dbs have to be two in sqlite mode ,
+You need to prepare or modify the standard one the config file for DB connection, the dbs have to be two in sqlite mode ,
 and can be only one in postgres.
 
 If you run grunt, then two sqlite db files will be created in test folder, you can eventually use these dbs as starting point
