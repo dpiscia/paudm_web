@@ -20,6 +20,9 @@ var db = require('./db');
 var security = require('./security');
 var config = require('./config');
 
+var RedisStore = require("connect-redis")(express);
+var redis = require("redis").createClient();
+
 /**
  * Configuration
  */
@@ -34,7 +37,8 @@ app.use(express.bodyParser());
 app.use(expressValidator());
 app.use(express.methodOverride());
 
-app.use(express.session({ secret: 'keyboard cat' }));
+app.use(express.session({ secret: 'keyboard cat' ,
+			store: new RedisStore({ host: 'localhost', port: 6379, client: redis })}));
   // Initialize Passport!  Also use passport.session() middleware, to support
   // persistent login sessions (recommended).
 app.use(flash());
@@ -70,9 +74,11 @@ app.get('/api/jobs', api.list);
 app.get('/api/qc/:id', api.qc_list);
 // redirect all others to the index (HTML5 history)
 app.get('/login', function(req, res){
+  console.log(req.cookies);
   res.render('login', { user: req.user, message: req.flash('error') });
 });
 app.get('/logout', function(req, res){
+  console.log("on logout" + req.cookies);
   req.logout();
   res.redirect('/');
 });
