@@ -41,7 +41,7 @@
     "q" : "",
     "dblite" : "",
     "knex" : "",
-    "express-validator": ""
+    "express-validator": "",
     "connect-redis" :""
   },
 
