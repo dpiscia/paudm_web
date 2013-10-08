@@ -7,7 +7,7 @@ console.log("entre db connection");
 
 module.exports.connectDatabase = function(config){
 console.log("initialize");
-console.log("config is "+config.job.client);
+console.log("config is really"+config.job.client);
 if (config.job.client === "pg")
 	{
 	 
