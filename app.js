@@ -28,7 +28,7 @@ var redis = require("redis").createClient();
  */
 
 // all environments
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || config.port);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.use(express.logger('dev'));
@@ -38,7 +38,7 @@ app.use(expressValidator());
 app.use(express.methodOverride());
 
 app.use(express.session({ secret: 'keyboard cat' ,
-			store: new RedisStore({ host: 'localhost', port: 6379, client: redis })}));
+			store: new RedisStore({ host: config.redis.host, port: config.redis.port, client: redis })}));
   // Initialize Passport!  Also use passport.session() middleware, to support
   // persistent login sessions (recommended).
 app.use(flash());
@@ -100,7 +100,7 @@ db.connectDatabase(config);
   
   // Socket.io Communication
   // Sync work only with two-phases commit disabled in postgresql
-if (config.job.client  === "dpostgr"){
+if (config.sync  == true){
 	io.sockets.on('connection', require('./routes/socket'));
 }
 
