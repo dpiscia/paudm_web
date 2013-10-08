@@ -1,6 +1,7 @@
 # pau_web [![Build Status](https://secure.travis-ci.org/dpiscia/paudm_web.png?branch=master)](http://travis-ci.org/dpiscia/paudm_web)
 
-Data visualization (tree data-structure) web app
+Data visualization (tree data-structure) web app,
+backend is built on node.js for rest api and websocket communication, while admin backend is written in python (Django/Flask), client is based on angularjs,d3.js.
 
 ## Getting Started
 clone the  git module with: `git clone https://github.com/dpiscia/paudm_web`
@@ -95,6 +96,11 @@ _(Coming soon)_
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
+##Admin
+
+the admin is implemented by Django/bootsrapped, or by flask, a django-inspired framewrok not-opinionated and orm-flexible
+At the moment session will not be shared between the two backends, but it's possibile to use REdis and share it.
+From the flask admin it's possibile to re-use 100% of the sqlalchemy model already defined for scientific pipelines.
 ## Release History
 pre-release(pre-vacations) v 0.0.1 
 
@@ -105,3 +111,5 @@ https://github.com/dpiscia/paudm_web/releases
 ## License
 Copyright (c) 2013 PAUDM-team  
 Licensed under the MIT license.
+
+
