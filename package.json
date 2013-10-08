@@ -42,7 +42,7 @@
     "dblite" : "",
     "knex" : "",
     "express-validator": ""
-    
+    "connect-redis" :""
   },
 
   "devDependencies": {
