@@ -10,6 +10,7 @@
 "use strict";
 /* jshint -W098 */
 /* jshint -W003 */
+/* jshint -W009 */
 var q = require('q');
 var db = require('../db');
 var async = require('async');
@@ -38,7 +39,7 @@ module.exports.qc_list = function(req, res){
 function query_qc_post(id)
 	{  
 		var deferred = q.defer();
-		db.client_pau("quality_control").select().where('job_id',id).then  
+		db.client_pau("quality_control").select().where('job_id',id).andWhere('ref', 'not like', 'general').then  
 		(
 			function(resp) 
 			{
@@ -62,9 +63,33 @@ function query_post(id,all)
 		db.client_job('job as p').select(db.client_job.raw('*, (select count(*)  from job a where a.super_id = p.id) as nbr')).whereNull('super_id').then
 		(
 			function(resp) 
-			{
-				console.log(resp);
-				deferred.resolve(resp);
+			{	
+				//console.log(resp);
+				var job_ids = new Array();
+				var ids = {};
+				for (var i in resp) {
+					
+					job_ids.push(resp[i].id);				
+					ids[resp[i].id] = i;}
+					
+				db.client_pau("quality_control").select().whereIn('job_id',job_ids).andWhere('ref','general').then
+								(
+					function(resp_qc) 
+					{
+						
+						var jobs = new Array();
+						for (var i in resp_qc) {
+							resp[ids[resp_qc[i].job_id]].qc = resp_qc[i].qc_pass;
+							}	
+					
+						deferred.resolve(resp);
+					}, 
+					function(err) 
+					{
+						console.log(err.message);
+					}
+				);  
+				//deferred.resolve(resp);
 			}, 
 			function(err) 
 			{
