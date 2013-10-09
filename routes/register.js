@@ -14,9 +14,10 @@ var q = require('q');
 var db = require('../db');
 var async = require('async');
 var config = require('../config');
+var passport = require('passport');
 //jobs rest api
 
-module.exports.reg = function(req, res){
+module.exports.reg_post = function(req, res){
 	console.log(req.body.email);
 	req.assert('First_name', 'Name is required').notEmpty();           //Validate name
 	req.assert('Last_name', 'Name is required').notEmpty();           //Validate name
@@ -42,3 +43,24 @@ module.exports.reg = function(req, res){
 		res.render('register',{'message' : 'Registration Error'} );
     }
  };
+
+module.exports.logout_get =  function(req, res){
+  console.log("on logout" + req.cookies);
+  req.logout();
+  res.redirect('/');
+};
+
+module.exports.login_get = function(req, res){
+  console.log(req.cookies);
+  res.render('login', { user: req.user, message: req.flash('error') });
+};
+
+module.exports.reg_get = function(req, res){
+  res.render('register' );
+};
+
+module.exports.login_post = 
+  function(req, res) {
+	console.log("redirect");
+    res.redirect('/');
+  };

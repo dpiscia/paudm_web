@@ -6,7 +6,6 @@
 
 var express = require('express'),
   routes = require('./routes'),
-  register = require('./routes/register'),
   api = require('./routes/api'),
   path = require('path'),
   flash = require('connect-flash'),
@@ -18,6 +17,7 @@ var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
 var db = require('./db');
 var security = require('./security');
+var register = require('./routes/register');
 var config = require('./config');
 var RedisStore = require("connect-redis")(express);
 var redis = require("redis").createClient();
@@ -77,32 +77,16 @@ app.get('/api/jobs/:id/:all', api.list);
 app.get('/api/jobs', api.list);
 app.get('/api/qc/:id', api.qc_list);
 // redirect all others to the index (HTML5 history)
-app.get('/login', function(req, res){
-  console.log(req.cookies);
-  res.render('login', { user: req.user, message: req.flash('error') });
-});
-app.get('/logout', function(req, res){
-  console.log("on logout" + req.cookies);
-  req.logout();
-  res.redirect('/');
-});
-app.get('/register', function(req, res){
-  res.render('register' );
-});
-app.post('/login', 
-  passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }),
-  function(req, res) {
-	console.log("redirect");
-    res.redirect('/');
-  });
- 
-app.post('/register',register.reg);
+
+//login/logout/register points
+app.get('/login', register.login_get);
+app.get('/logout',register.logout_get);
+app.get('/register', register.reg_get);
+app.post('/login', passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }), register.login_post);
+app.post('/register',register.reg_post);
+
 db.connectDatabase(config);
-  
-
-
-  
-  // Socket.io Communication
+     // Socket.io Communication
   // Sync work only with two-phases commit disabled in postgresql
 if (config.sync){
 	io.sockets.on('connection', require('./routes/socket'));
