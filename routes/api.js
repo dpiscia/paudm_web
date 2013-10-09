@@ -35,7 +35,7 @@ module.exports.qc_list = function(req, res){
 		res.send(val);
 		});
 	};
-
+// select operative quality_controls as a funciton of job id
 function query_qc_post(id)
 	{  
 		var deferred = q.defer();
@@ -53,13 +53,13 @@ function query_qc_post(id)
 		); 
 	return deferred.promise;
 	}  
-//select p.id , (select count(a.id) from job a where a.super_id = p.id) from job p
+
 function query_post(id,all)
 {  
 	var deferred = q.defer();
 	console.log("entra");
 	if (id === undefined) 
-	{
+	{	//select all job with super_id null
 		db.client_job('job as p').select(db.client_job.raw('*, (select count(*)  from job a where a.super_id = p.id) as nbr')).whereNull('super_id').then
 		(
 			function(resp) 
@@ -71,7 +71,7 @@ function query_post(id,all)
 					
 					job_ids.push(resp[i].id);				
 					ids[resp[i].id] = i;}
-					
+					//select informative quality control and attac h them to job informations
 				db.client_pau("quality_control").select().whereIn('job_id',job_ids).andWhere('ref','general').then
 								(
 					function(resp_qc) 
@@ -89,7 +89,7 @@ function query_post(id,all)
 						console.log(err.message);
 					}
 				);  
-				//deferred.resolve(resp);
+				
 			}, 
 			function(err) 
 			{
@@ -100,7 +100,8 @@ function query_post(id,all)
 	else 
 	{
 		if (all === '1') 
-		{  
+		{  	//select all job with one level depth for the given job id
+			//if db backend is postgres query will be sql recursive enabled if sqlite the recursion is given at server level (it takes much more time)
 			if (config.job.client === "pg")
 			{
 				console.log(recursive_query(id,1));
@@ -129,7 +130,7 @@ function query_post(id,all)
 
 		}
 		if (all === '0') 
-		{
+		{   //select all job with zero level depth for the given job id
 			db.client_job('job').where("id",id).select().then
 			( 
 				function(resp) 
@@ -145,7 +146,7 @@ function query_post(id,all)
 
 		}
 		if (all === 'All') 
-		{  
+		{  //select all job with infinite level depth for the given job id
 			if (config.job.client === "pg")
 			{
 				console.log(recursive_query(id,100));
