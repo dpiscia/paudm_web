@@ -23,8 +23,14 @@ var config = {}
 
 //config.pau= {client : "pg" , host : "host name", user : "user" , password : "pwd" , name : "db_name" }; 
 //if sqlite use the scheme belowe
-config.job = {client : "sqlite", name : "test/test_DB_job"};
-config.pau = {client : "sqlite", name : "test/test_DB_pau"};
+config.job = {client : "sqlite3", name : "test/test_DB_job"};
+config.pau = {client : "sqlite3", name : "test/test_DB_pau"};
+config.session_store = false;
+config.port = 3000;
+config.redis = {port :6379, host : 'localhost'};
+config.sync = false; //disabled if postgresql is used with two phases transaction or with sqlite3
+module.exports = config;
+
 module.exports = config;
 ```
 
