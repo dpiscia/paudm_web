@@ -19,7 +19,6 @@ var io = require('socket.io').listen(server);
 var db = require('./db');
 var security = require('./security');
 var config = require('./config');
-
 var RedisStore = require("connect-redis")(express);
 var redis = require("redis").createClient();
 
@@ -37,8 +36,13 @@ app.use(express.bodyParser());
 app.use(expressValidator());
 app.use(express.methodOverride());
 
-app.use(express.session({ secret: 'keyboard cat' ,
-			store: new RedisStore({ host: config.redis.host, port: config.redis.port, client: redis })}));
+var session_config = { secret: 'keyboard cat' };
+
+if (config.session_store) { 
+			console.log("enabled redis stored backend");
+			session_config['store'] = new RedisStore({ host: config.redis.host, port: config.redis.port, client: redis } ); 
+			}
+app.use(express.session(session_config));
   // Initialize Passport!  Also use passport.session() middleware, to support
   // persistent login sessions (recommended).
 app.use(flash());
@@ -100,7 +104,7 @@ db.connectDatabase(config);
   
   // Socket.io Communication
   // Sync work only with two-phases commit disabled in postgresql
-if (config.sync  === true){
+if (config.sync){
 	io.sockets.on('connection', require('./routes/socket'));
 }
 
