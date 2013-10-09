@@ -100,7 +100,7 @@ function query_post(id,all)
 	else 
 	{
 		if (all === '1') 
-		{  	//select all job with one level depth for the given job id
+		{	//select all job with one level depth for the given job id
 			//if db backend is postgres query will be sql recursive enabled if sqlite the recursion is given at server level (it takes much more time)
 			if (config.job.client === "pg")
 			{
