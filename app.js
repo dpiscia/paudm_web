@@ -19,9 +19,10 @@ var db = require('./db');
 var security = require('./security');
 var register = require('./routes/register');
 var config = require('./config');
-var RedisStore = require("connect-redis")(express);
-var redis = require("redis").createClient();
-
+if (config.session_store) {
+	var RedisStore = require("connect-redis")(express);
+	var redis = require("redis").createClient();
+}
 /**
  * Configuration
  */
