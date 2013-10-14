@@ -11,6 +11,8 @@
 /* jshint -W098 */
 /* jshint -W003 */
 /* jshint -W009 */
+/* jshint -W117 */
+
 var q = require('q');
 var db = require('../db');
 var async = require('async');
