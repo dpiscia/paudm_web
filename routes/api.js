@@ -62,35 +62,9 @@ function query_post(id,all)
 	{	//select all job with super_id null
 		db.client_job('job as p').select(db.client_job.raw('*, (select count(*)  from job a where a.super_id = p.id) as nbr')).whereNull('super_id').then
 		(
-			function(resp) 
-			{	
-				//console.log(resp);
-				var job_ids = new Array();
-				var ids = {};
-				for (var i in resp) {
-					
-					job_ids.push(resp[i].id);				
-					ids[resp[i].id] = i;}
-					//select informative quality control and attac h them to job informations
-				db.client_pau("quality_control").select().whereIn('job_id',job_ids).andWhere('ref','general').then
-								(
-					function(resp_qc) 
-					{
-						
-						var jobs = new Array();
-						for (var i in resp_qc) {
-							resp[ids[resp_qc[i].job_id]].qc = resp_qc[i].qc_pass;
-							}	
-					
-						deferred.resolve(resp);
-					}, 
-					function(err) 
-					{
-						console.log(err.message);
-					}
-				);  
-				
-			}, 
+			function(resp) {deferred.resolve(quality_control(resp));
+			}
+			, 
 			function(err) 
 			{
 				console.log(err.message);
@@ -110,7 +84,7 @@ function query_post(id,all)
 					function(resp) 
 					{
 						
-						deferred.resolve(resp.rows);
+						deferred.resolve(quality_control(resp.rows));
 					}, 
 					function(err) 
 					{
@@ -136,7 +110,7 @@ function query_post(id,all)
 				function(resp) 
 				{
 					
-					deferred.resolve(resp);
+					deferred.resolve(quality_control(resp));
 				}, 
 				function(err) 
 				{
@@ -155,7 +129,7 @@ function query_post(id,all)
 					function(resp) 
 					{
 						
-						deferred.resolve(resp.rows);
+						deferred.resolve(quality_control(resp.rows));
 					}, 
 					function(err) 
 					{
@@ -244,3 +218,32 @@ function flat_tree_dict(root_job,level, level_set, callback)
 
 }
 
+function quality_control(resp) //get the general quality control value attached to job
+			{	var deferred = q.defer();
+				//console.log(resp);
+				var job_ids = new Array();
+				var ids = {};
+				for (var i in resp) {
+					
+					job_ids.push(resp[i].id);				
+					ids[resp[i].id] = i;}
+					//select informative quality control and attac h them to job informations
+				db.client_pau("quality_control").select().whereIn('job_id',job_ids).andWhere('ref','general').then
+								(
+					function(resp_qc) 
+					{
+						
+						var jobs = new Array();
+						for (var i in resp_qc) {
+							resp[ids[resp_qc[i].job_id]].qc = resp_qc[i].qc_pass;
+							}	
+					
+						deferred.resolve(resp);
+					}, 
+					function(err) 
+					{
+						console.log(err.message);
+					}
+				);  
+			return deferred.promise;	
+			}
