@@ -61,15 +61,7 @@ function query_post(id,all)
 	if (id === undefined) 
 	{	//select all job with super_id null
 		db.client_job('job as p').select(db.client_job.raw('*, (select count(*)  from job a where a.super_id = p.id) as nbr')).whereNull('super_id').then
-		(
-			function(resp) {deferred.resolve(quality_control(resp));
-			}
-			, 
-			function(err) 
-			{
-				console.log(err.message);
-			}
-		); 
+		(quality_control).then(deferred.resolve, console.log);	
 	}
 	else 
 	{
@@ -84,11 +76,7 @@ function query_post(id,all)
 					function(resp) 
 					{
 						
-						deferred.resolve(quality_control(resp.rows));
-					}, 
-					function(err) 
-					{
-						console.log(err.message);
+						quality_control(resp.rows).then(deferred.resolve,console.log);
 					}
 				);
 			}
@@ -98,7 +86,7 @@ function query_post(id,all)
 				{
 					console.log("lunghezza",treeSet.length);
 					console.log("lunghezza",treeSet[0].id);
-					deferred.resolve(treeSet);
+					quality_control(treeSet).then(deferred.resolve,console.log);
 				});
 			}
 
@@ -106,18 +94,7 @@ function query_post(id,all)
 		if (all === '0') 
 		{   //select all job with zero level depth for the given job id
 			db.client_job('job').where("id",id).select().then
-			( 
-				function(resp) 
-				{
-					
-					deferred.resolve(quality_control(resp));
-				}, 
-				function(err) 
-				{
-					console.log(err.message);
-				}
-			);
-
+			( quality_control).then(deferred.resolve, console.log);
 		}
 		if (all === 'All') 
 		{  //select all job with infinite level depth for the given job id
@@ -129,11 +106,8 @@ function query_post(id,all)
 					function(resp) 
 					{
 						
-						deferred.resolve(quality_control(resp.rows));
-					}, 
-					function(err) 
-					{
-						console.log(err.message);
+						quality_control(resp.rows).then(deferred.resolve,console.log);
+						
 					}
 				);
 			}
@@ -143,7 +117,8 @@ function query_post(id,all)
 				{
 					console.log("lunghezza",treeSet.length);
 					console.log("lunghezza",treeSet[0].id);
-					deferred.resolve(treeSet);
+					quality_control(treeSet).then(deferred.resolve,console.log);
+					
 				});
 			}
 		}
@@ -152,7 +127,7 @@ function query_post(id,all)
 return deferred.promise;
 }
  
-function recursive_query(id,level) {
+function recursive_query(id,level) {//Postgresql recursive query, much faster than function flat_tree_dict
 	return (/*jshint multistr: true */"with recursive t(level,nbr, super_id,id, task, status, config, input, output , ts_created, ts_started, ts_ended) as ( \
 		select 0, (select count(*) as nbr from job a where a.super_id = p.id),  super_id,id, task, status, config, input, output , ts_created, ts_started, ts_ended from job p where p.id = "+id+" \
 		union \
@@ -169,7 +144,7 @@ function recursive_query(id,level) {
 ) select * from t   ;");	
 }
 /*jshint unused:true*/
-function flat_tree_dict(root_job,level, level_set, callback)
+function flat_tree_dict(root_job,level, level_set, callback) //sqlite recursive query
 {
 	var treeSet = []; 
 	console.log("inside flat_Tree ID"+ root_job);
@@ -218,7 +193,7 @@ function flat_tree_dict(root_job,level, level_set, callback)
 
 }
 
-function quality_control(resp) //get the general quality control value attached to job
+function quality_control(resp) //get the general quality control value attached to a job list
 			{	var deferred = q.defer();
 				//console.log(resp);
 				var job_ids = new Array();
