@@ -1,8 +1,8 @@
 var config = {}
 //if postgresql use the below config scheme
-config.job = {client : "pg" , host : "localhost", user : "dpiscia" , password : "Iris82Da" , name : "paudm_post" }; 
+config.job = {client : "pg" , host : "localhost", user : "dpiscia" , password : "psw" , name : "paudm_post" }; 
 
-config.pau= {client : "pg" , host : "localhost", user : "dpiscia" , password : "Iris82Da" , name : "paudm_post" }; 
+config.pau= {client : "pg" , host : "localhost", user : "dpiscia" , password : "psw" , name : "paudm_post" }; 
 //if sqlite use the scheme belowe
 //config.job = {client : "sqlite3", name : "test/test_DB_job"};
 //config.pau = {client : "sqlite3", name : "test/test_DB_pau"};
