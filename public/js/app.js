@@ -37,26 +37,3 @@ config(function ($routeProvider) {
 });
 
 
-
-/*angular.module('jobcat', ['jobServices','job.directives' ,"angular-table", "angular-tabs", 'ui.bootstrap','ui.filters',])
-  .config(['$routeProvider', function($routeProvider) {
-  $routeProvider.
-      when('/jobs', {templateUrl: '/static/pages/job-list.html',   controller: JobListCtrl}).
-      when('/jobs/:jobId', {templateUrl: '/static/pages/job-detail.html', controller: JobDetailCtrl}).
-      otherwise({redirectTo: '/jobs'});
-}])
-.filter('startFrom', function() {
-    return function(input, start) {
-        start = +start; //parse to int
-        return input.slice(start);
-    }
-}).
-filter('range', function() {
-  return function(input, total) {
-    total = parseInt(total);
-    for (var i=0; i<total; i++)
-      input.push(i);
-    return input;
-  };
-});
-*/
