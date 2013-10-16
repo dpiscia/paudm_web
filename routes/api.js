@@ -73,7 +73,7 @@ function query_post(id,all)
 			//if db backend is postgres query will be sql recursive enabled if sqlite the recursion is given at server level (it takes much more time)
 			if (config.job.client === "pg")
 			{
-				
+				console.log("all == 1");
 				db.client_job.raw(query.recursive_query(id,1)).then
 				( 
 					function(resp) 

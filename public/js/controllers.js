@@ -105,7 +105,7 @@ function JobDetailCtrl($scope, $routeParams,  Job, socket, $location, BreadCrumb
     $scope.job_list = data;
 	BreadCrumbsService.push("home",
 	{
-	href: '#/detailed_view/'+$routeParams.jobId,
+	href: '#/detailed_view/'+$routeParams.jobId+'/'+$routeParams.All,
 	label: data[0].task+"-"+$routeParams.jobId
     });
 	});
