@@ -90,7 +90,7 @@
 |        <td><p>{{job.task}}</p>  </td>
 |        <td><p>{{job.nbr}}</p></td>
 |        <td> <p>{{job.status}}</p>   </td>
-|        <td> {{job.qc}}</td>
+|        <td> <i class= "{{job.qc && 'icon-ok' || 'icon-remove' }}" ></i> </td>
 |         <td> <p>{{job.ts_created | date:'medium'}}</p>   </td>
 |         <td> <p>{{job.ts_started | date:'medium'}}</p>   </td>
 |         <td> <p>{{job.ts_ended | date:'medium'}}</p>   </td>
