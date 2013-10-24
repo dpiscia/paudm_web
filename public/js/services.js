@@ -42,14 +42,14 @@ angular.module('myApp.services', ['ngResource']).
   
   
 }).factory('QC', function($resource){
-  var Job = $resource('/api/qc/:id', {id: "@id"}, {
+  var qcs = $resource('/api/qc/:id', {id: "@id"}, {
     query: {method:'GET', params:{}, isArray:true}
   });
   
 
       
       
-  return Job;
+  return qcs;
   
   
 });

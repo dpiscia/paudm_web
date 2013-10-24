@@ -20,28 +20,28 @@ div(style="background-color: rgb(245, 245, 245);")
 | 		  <thead>
 |    <tr>
 |          <th>ID</th>
-|          <th>Job ID</th>
-|          <th>Ref</th>
+
+|          <th>Name</th>
 |          <th>Min</a></th>
 |          <th>Max</th>
 |          <th>Value</th>
 |          <th>Units</th>
 |          <th>Passed</th>
-
+|          <th>Info</th>
      
 |    </tr>
 |  </thead>
 |    <tbody>
-|        <tr ng-repeat="qc in quality_controls ">
+|        <tr ng-repeat="qc in quality_controls "  >
 |          <td><a href ng-click="open(qc.plot_file)">{{qc.id}}</a></td>
-|          <td>{{qc.job_id}}</td>
-|          <td>{{qc.ref}}</td>
+
+|          <td >{{info[qc.ref].Name}}  </td>
 |          <td>{{qc.min_value}}</td>
 |          <td>{{qc.max_value}}</td>
 |          <td>{{qc.value}}</td>
 |          <td>{{qc.units}}</td>
 |          <td>{{qc.qc_pass}}</td>
-
+|          <td > <i class='icon-info-sign' tooltip={{info[qc.ref].QC_description}}><i></td>
 |        </tr>
 |    </tbody>  
 |  </table>
