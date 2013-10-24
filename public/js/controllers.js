@@ -1,6 +1,7 @@
 'use strict';
 /* jshint -W117 */
 /* jshint -W098 */
+/* jshint -W061*/
 /* Controllers */
 
 angular.module('myApp.controllers', []).
@@ -167,7 +168,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, items) {
   };
 };
 
-function JobSingleCtrl($scope, $routeParams,  Job, socket,QC, $filter, BreadCrumbsService, $modal) {
+function JobSingleCtrl($scope, $routeParams,  Job, socket,QC, $filter, BreadCrumbsService, $modal,$http) {
 	Job.query({id :$routeParams.jobId, all: 0}, function(data) {
     $scope.job = data[0];
          BreadCrumbsService.push("home",
@@ -179,9 +180,13 @@ function JobSingleCtrl($scope, $routeParams,  Job, socket,QC, $filter, BreadCrum
 
 	QC.query({id :$routeParams.jobId}, function(data) {
     $scope.quality_controls = data;
+    window.qc = "";
+    $http({method: "GET", url: "js/qc_constants.py"}).success(function(data){$scope.info = eval("(" +data+ ')'); });
+    //$http({method: "GET", url: "js/qc_constants.py"}).success(function(data){ $scope.info =JSON.parse(data); });
 
 });
       $scope.img = "prova.jpg";	
+      
       $scope.open = function (name) {
       $scope.img = name;
     var modalInstance = $modal.open({
