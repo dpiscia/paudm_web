@@ -96,13 +96,13 @@ function JobListCtrl($scope, $filter, $timeout,  Job, Prod, socket, $location, B
 	};
 	var sync_filter = function(){
 		$scope.$watch("status_filter", function(){
-		$scope.filteredData = $filter("job_check")($filter("filter")($filter("filter")($scope.jobs, $scope.task_filter), $scope.status_filter), $scope.production_filter);
+		$scope.filteredData = $filter("job_check")($filter("filter")($filter("filter")($scope.jobs, {task:$scope.task_filter}), {status:$scope.status_filter}), $scope.production_filter);
 		});
 		$scope.$watch("task_filter", function(){
-		$scope.filteredData = $filter("job_check")($filter("filter")($filter("filter")($scope.jobs, $scope.task_filter), $scope.status_filter), $scope.production_filter);
+		$scope.filteredData = $filter("job_check")($filter("filter")($filter("filter")($scope.jobs, {task:$scope.task_filter}), {status:$scope.status_filter}), $scope.production_filter);
 		});
 		$scope.$watch("production_filter", function(){
-		$scope.filteredData = $filter("job_check")($filter("filter")($filter("filter")($scope.jobs, $scope.task_filter), $scope.status_filter), $scope.production_filter);
+		$scope.filteredData = $filter("job_check")($filter("filter")($filter("filter")($scope.jobs, {task:$scope.task_filter}), {status:$scope.status_filter}), $scope.production_filter);
 		});
 	};
 }
@@ -119,6 +119,25 @@ function JobDetailCtrl($scope, $routeParams,  Job, socket, $location, BreadCrumb
 	$scope.selection = $scope.items[0];
 	$scope.type_tasks = ["task",'status'];
 	$scope.type_task = $scope.type_tasks[1];
+    $scope.numberOfPages=function() {
+		return Math.ceil($scope.job_list.length/$scope.pageSize);                
+	};
+	$scope.orderProp = '-id';
+    $scope.currentPage = 0;
+	$scope.pageSize = 10;
+	$scope.setPage = function () {
+		$scope.currentPage = this.n;
+	};
+	$scope.prevPage = function () {
+		if ($scope.currentPage > 0) {
+			$scope.currentPage--;
+		}
+	};
+	$scope.nextPage = function () {
+		if ($scope.currentPage < $scope.numberOfPages() - 1) {
+			$scope.currentPage++;
+		}
+	};   
 	socket.on('onJobCreated', function(data) {
 	$scope.handleCreatedJob(data);
 	});
