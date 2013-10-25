@@ -209,7 +209,7 @@ function ProdCtrl($scope, Prod,  socket, BreadCrumbsService) {
 	href: '#/prod_view/',
 	label: 'prod view'
     });
-   	Prod.query( {} , function(data) {
+	Prod.query( {} , function(data) {
     $scope.productions = data;
     });
 }

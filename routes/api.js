@@ -61,12 +61,11 @@ function query_prod(id)
 					
 					job_ids.push(resp[i].job_id);				
 					}
-			        db.client_job("job").select().whereIn('id',job_ids).then(
-			        function(resp) {
-			        console.log(resp);
-			        deferred.resolve(resp);
-			        })
-				
+					db.client_job("job").select().whereIn('id',job_ids).then(
+					function(resp) {
+					console.log(resp);
+					deferred.resolve(resp);
+					});
 			}, 
 			function(err) 
 			{
@@ -74,7 +73,7 @@ function query_prod(id)
 			}
 		); 
 	return deferred.promise;
-	}  	
+	}
 	
 // select operative quality_controls as a funciton of job id
 function query_qc_post(id)
