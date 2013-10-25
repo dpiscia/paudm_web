@@ -66,7 +66,7 @@
 |        <option value="!!">-- All Tasks --</option>
 | 		 <option ng-repeat="job in filteredData | unique:'task'" value="{{job.task}}">{{job.task}}</option>
 |	</select> <br>
-|	Production filter    
+|	Production filter &nbsp;    
 |		<select ng-model="production_filter" >
 |        <option value="!!">-- All Jobs --</option>
 | 		 <option ng-repeat="production in productions " value="{{production.job_id}}">{{production.release}}</option>

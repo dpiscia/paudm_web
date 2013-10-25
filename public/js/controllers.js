@@ -16,9 +16,10 @@ function JobListCtrl($scope, $filter, $timeout,  Job, Prod, socket, $location, B
 	href: '#/',
 	label: 'General view'
 	});
-	Prod.query({},function(data){$scope.productions = data;});
-	$scope.task_filter = "";
-	$scope.status_filter = "";
+	Prod.query({},function(data){$scope.productions = data});
+	$scope.task_filter = "!!";
+	$scope.status_filter = "!!";
+	$scope.production_filter = "!!";
 	$scope.counter = 0;
 	Job.query({}, function(data){
 	//1.callback on d3.plot, in the future implement on promise
@@ -95,10 +96,13 @@ function JobListCtrl($scope, $filter, $timeout,  Job, Prod, socket, $location, B
 	};
 	var sync_filter = function(){
 		$scope.$watch("status_filter", function(){
-		$scope.filteredData = $filter("filter")($filter("filter")($scope.jobs, $scope.task_filter), $scope.status_filter);
+		$scope.filteredData = $filter("job_check")($filter("filter")($filter("filter")($scope.jobs, $scope.task_filter), $scope.status_filter), $scope.production_filter);
 		});
 		$scope.$watch("task_filter", function(){
-		$scope.filteredData = $filter("filter")($filter("filter")($scope.jobs, $scope.task_filter), $scope.status_filter);     
+		$scope.filteredData = $filter("job_check")($filter("filter")($filter("filter")($scope.jobs, $scope.task_filter), $scope.status_filter), $scope.production_filter);
+		});
+		$scope.$watch("production_filter", function(){
+		$scope.filteredData = $filter("job_check")($filter("filter")($filter("filter")($scope.jobs, $scope.task_filter), $scope.status_filter), $scope.production_filter);
 		});
 	};
 }
