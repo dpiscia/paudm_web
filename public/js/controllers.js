@@ -16,7 +16,7 @@ function JobListCtrl($scope, $filter, $timeout,  Job, Prod, socket, $location, B
 	href: '#/',
 	label: 'General view'
 	});
-	Prod.query({},function(data){$scope.productions = data});
+	Prod.query({},function(data){$scope.productions = data;});
 	$scope.task_filter = "!!";
 	$scope.status_filter = "!!";
 	$scope.production_filter = "!!";
