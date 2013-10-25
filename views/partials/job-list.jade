@@ -54,13 +54,22 @@
  
 |      Status filter
 
-|	<select ng-model="status_filter" ng-options="job.status as job.status for job in filteredData | unique:'status'">
-|   <option value="">-- chose status --</option>
+|	<select ng-model="status_filter" >
+|     <option value="!!">-- All Status --</option>
+|     <option ng-repeat="job in filteredData | unique:'status'" value="{{job.status}}">{{job.status}}</option>
+
+
 |  // unique options from the categories
 |	</select>
 |	Task filter    
-|		<select ng-model="task_filter" ng-options="job.task as job.task group by  'pixelsim' for job in filteredData | unique:'task'">
-| 		 <option value="">-- chose task --</option>  
+|		<select ng-model="task_filter" >
+|        <option value="!!">-- All Tasks --</option>
+| 		 <option ng-repeat="job in filteredData | unique:'task'" value="{{job.task}}">{{job.task}}</option>
+|	</select> <br>
+|	Production filter    
+|		<select ng-model="production_filter" >
+|        <option value="!!">-- All Jobs --</option>
+| 		 <option ng-repeat="production in productions " value="{{production.job_id}}">{{production.release}}</option>
 |	</select> <br>
 |    </div>
 |   </div>     
@@ -85,7 +94,7 @@
 |  </tr>
 | </thead>
 |   <tbody>
-|       <tr ng-repeat="job in jobs | filter:query |filter:status_filter | filter:task_filter | orderBy:orderProp:reverse  | startFrom:currentPage*pageSize | limitTo:pageSize"   ng-class="{ error: (job.status == 'FAILED') }">
+|       <tr ng-repeat="job in jobs | filter:query |filter:{status:status_filter} | filter:{task:task_filter} | job_check:production_filter | orderBy:orderProp:reverse  | startFrom:currentPage*pageSize | limitTo:pageSize"   ng-class="{ error: (job.status == 'FAILED') }">
 |         <td><a href="#/single_view/{{job.id}}">{{job.id}}</a></td>
 |        <td><p>{{job.task}}</p>  </td>
 |        <td><p>{{job.nbr}}</p></td>

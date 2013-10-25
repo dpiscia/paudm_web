@@ -59,4 +59,19 @@ filter('range', function() {
         text = text.replace(/\n|\r/g, '</p><p>');
         return (text.length > 0 ? '<p>' + text.replace(/\s/g, '&nbsp;') + '</p>' : null);
     };
+}).filter('job_check', function () {
+    return function(arrays,job_id){
+    var arrayToReturn = []; 
+    if (job_id === undefined  || job_id === "!!") {
+        return arrays; }
+        else
+        {
+        for (var i=0; i<arrays.length; i++){
+            if (arrays[i].parent_job_id === parseInt(job_id)) {
+                arrayToReturn.push(arrays[i]);
+            }
+            return arrayToReturn;
+        }}
+        
+    };
 });

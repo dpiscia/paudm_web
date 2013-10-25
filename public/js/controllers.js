@@ -10,12 +10,13 @@ angular.module('myApp.controllers', []).
 	controller('MyCtrl1', JobListCtrl).
 	controller('MyCtrl2', JobDetailCtrl).
 	controller('MyCtrl3', JobSingleCtrl);
-function JobListCtrl($scope, $filter, $timeout,  Job, socket, $location, BreadCrumbsService) {
+function JobListCtrl($scope, $filter, $timeout,  Job, Prod, socket, $location, BreadCrumbsService) {
 	BreadCrumbsService.push("home",
 	{
 	href: '#/',
 	label: 'General view'
 	});
+	Prod.query({},function(data){$scope.productions = data;});
 	$scope.task_filter = "";
 	$scope.status_filter = "";
 	$scope.counter = 0;
