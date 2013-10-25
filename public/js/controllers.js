@@ -9,7 +9,8 @@ angular.module('myApp.controllers', []).
 }).
 	controller('MyCtrl1', JobListCtrl).
 	controller('MyCtrl2', JobDetailCtrl).
-	controller('MyCtrl3', JobSingleCtrl);
+	controller('MyCtrl3', JobSingleCtrl).
+	controller('MyCtrl4', ProdCtrl);
 function JobListCtrl($scope, $filter, $timeout,  Job, socket, $location, BreadCrumbsService) {
 	BreadCrumbsService.push("home",
 	{
@@ -201,6 +202,16 @@ function JobSingleCtrl($scope, $routeParams,  Job, socket,QC, $filter, BreadCrum
   };
 }
 
+function ProdCtrl($scope, Prod,  socket, BreadCrumbsService) {
 
+         BreadCrumbsService.push("home",
+	{
+	href: '#/prod_view/',
+	label: 'prod view'
+    });
+   	Prod.query( {} , function(data) {
+    $scope.productions = data;
+    });
+}
 
 
