@@ -67,11 +67,14 @@ filter('range', function() {
         else
         {
         for (var i=0; i<arrays.length; i++){
-            if (arrays[i].parent_job_id === parseInt(job_id)) {
+            
+            if (arrays[i].id === parseInt(job_id) || arrays[i].parent_job_id === parseInt(job_id) ) {
                 arrayToReturn.push(arrays[i]);
+                console.log(arrays[i].id);
             }
-            return arrayToReturn;
-        }}
+            
+        }
+        return arrayToReturn;}
         
     };
 });
