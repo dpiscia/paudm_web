@@ -9,8 +9,14 @@ angular.module('myApp.controllers', []).
 }).
 	controller('MyCtrl1', JobListCtrl).
 	controller('MyCtrl2', JobDetailCtrl).
+<<<<<<< HEAD
 	controller('MyCtrl3', JobSingleCtrl);
 function JobListCtrl($scope, $filter, $timeout,  Job, Prod, socket, $location, BreadCrumbsService) {
+=======
+	controller('MyCtrl3', JobSingleCtrl).
+	controller('MyCtrl4', ProdCtrl);
+function JobListCtrl($scope, $filter, $timeout,  Job, socket, $location, BreadCrumbsService) {
+>>>>>>> master
 	BreadCrumbsService.push("home",
 	{
 	href: '#/',

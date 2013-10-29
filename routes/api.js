@@ -39,33 +39,24 @@ module.exports.qc_list = function(req, res){
 		});
 	};
 	
-module.exports.prod_list = function(req, res){
-	
-	query_prod().then (function(val) 
+module.exports.prod_list = function(req, res)
+	{
+
+	query_prods().then(function(val) 
 		{
-		res.send(val);
-		});
-	};	
-	
-// select production jobs list 
-function query_prod(id)
+			res.send(val);
+		});  
+	};
+// select operative quality_controls as a funciton of job id
+function query_prods()
 	{  
 		var deferred = q.defer();
-		db.client_pau("production").select('job_id').then  
+		db.client_pau("production").select().then  
 		(
 			function(resp) 
-			{   
-			console.log(resp);
-			var job_ids = new Array();
-			for (var i in resp) {
-					
-					job_ids.push(resp[i].job_id);				
-					}
-					db.client_job("job").select().whereIn('id',job_ids).then(
-					function(resp) {
-					console.log(resp);
-					deferred.resolve(resp);
-					});
+			{
+				console.log(resp);
+				deferred.resolve(resp);
 			}, 
 			function(err) 
 			{
@@ -73,8 +64,7 @@ function query_prod(id)
 			}
 		); 
 	return deferred.promise;
-	}
-	
+	}  
 // select operative quality_controls as a funciton of job id
 function query_qc_post(id)
 	{  
@@ -100,7 +90,8 @@ function query_post(id,all)
 	console.log("entra");
 	if (id === undefined) 
 	{	//select all job with super_id null
-		db.client_job('job as p').select(db.client_job.raw('*, (select count(*)  from job a where a.super_id = p.id) as nbr')).whereNull('super_id').then
+		db.client_job('job as p').
+		join('dependency','p.id', '=' ,'dependency.child_job_id', 'left').select(db.client_job.raw('*, (select count(*)  from job a where a.super_id = p.id) as nbr')).whereNull('p.super_id').then
 		(query.quality_control).then(deferred.resolve, console.log);	
 	}
 	else 

@@ -69,14 +69,15 @@ security.strategy;
 
 // serve index and view partials
 
-app.get('/', security.ensureAuthenticated, routes.index);
+app.get('/',  routes.index);
 app.get('/partials/:name', routes.partials);
 
 // JSON API
-app.get('/api/jobs/:id', security.ensureAuthenticated, api.list);
+app.get('/api/jobs/:id',  api.list);
 app.get('/api/jobs/:id/:all', api.list);
 app.get('/api/jobs', api.list);
 app.get('/api/qc/:id', api.qc_list);
+app.get('/api/prods', api.prod_list);
 app.get('/api/prods', api.prod_list);
 //app.get('/api/jobs/prod/:id', api.job_prod_list);
 // redirect all others to the index (HTML5 history)

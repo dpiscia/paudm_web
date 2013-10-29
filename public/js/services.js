@@ -45,15 +45,17 @@ angular.module('myApp.services', ['ngResource']).
   var qcs = $resource('/api/qc/:id', {id: "@id"}, {
     query: {method:'GET', params:{}, isArray:true}
   });
-return qcs;
+    
+  return qcs;
   
   
 })
 .factory('Prod', function($resource){
-  return  $resource('/api/prods', {} ,{
+  return $resource('/api/prods', {}, {
     query: {method:'GET', params:{}, isArray:true}
   });
-
+    
+  
   
   
 });

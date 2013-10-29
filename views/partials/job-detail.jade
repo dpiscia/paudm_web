@@ -163,7 +163,7 @@
 |    </tr>
 |  </thead>
 |    <tbody>
-|        <tr ng-repeat="job in job_list.slice(1,job_list.length)  | filter:query |filter:status_filter | filter:task_filter | orderBy:orderProp:reverse" ng-class="{ error: (job.status == 'FAILED') }">
+|        <tr ng-repeat="job in job_list.slice(1,job_list.length)  | filter:query |filter:status_filter | filter:task_filter | orderBy:orderProp:reverse  | startFrom:currentPage*pageSize | limitTo:pageSize" ng-class="{ error: (job.status == 'FAILED') }">
 |          <td><a href="#/single_view/{{job.id}}">{{job.id}}</a></td>
 |          <td><p>{{job.task}}</p>  </td>
 |          <td><p>{{job.nbr}}</p></td>
