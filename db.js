@@ -17,7 +17,7 @@ if (config.job.client === "pg")
 				connection: {
 		host     : config.job.host,
 		user     : config.job.user,
-		port     : 9000,
+		port     : config.job.port,
 		password : config.job.password,
 		database : config.job.name,
 		charset  : 'utf8',
@@ -33,7 +33,7 @@ if (config.job.client === "pg")
 	host     : config.pau.host,
 	user     : config.pau.user,
 	password : config.pau.password,
-	port     : 9000,
+	port     : config.pau.port,
 	database : config.pau.name,
 	charset  : 'utf8',
 		}

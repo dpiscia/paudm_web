@@ -29,12 +29,8 @@ config(function ($routeProvider) {
       templateUrl: '/partials/job-single.jade',
       controller: 'MyCtrl3'
     }).
-    when('/prod_view', {
-      templateUrl: '/partials/prod_view.jade',
-      controller: 'MyCtrl4'
-    }).
     otherwise({
-      redirectTo: '/prod_view'
+      redirectTo: '/general_view'
     });
 
  // $locationProvider.html5Mode(true);
