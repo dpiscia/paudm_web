@@ -225,16 +225,6 @@ function JobSingleCtrl($scope, $routeParams,  Job, socket,QC, $filter, BreadCrum
   };
 }
 
-function ProdCtrl($scope, Prod,  socket, BreadCrumbsService) {
 
-         BreadCrumbsService.push("home",
-	{
-	href: '#/prod_view/',
-	label: 'prod view'
-    });
-	Prod.query( {} , function(data) {
-    $scope.productions = data;
-    });
-}
 
 

@@ -78,6 +78,8 @@ app.get('/api/jobs/:id/:all', api.list);
 app.get('/api/jobs', api.list);
 app.get('/api/qc/:id', api.qc_list);
 app.get('/api/prods', api.prod_list);
+app.get('/api/prods', api.prod_list);
+//app.get('/api/jobs/prod/:id', api.job_prod_list);
 // redirect all others to the index (HTML5 history)
 
 //login/logout/register points
