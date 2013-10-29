@@ -19,9 +19,9 @@ If you run grunt, then two sqlite db files will be created in test folder, you c
 ```javascript
 var config = {}
 //if postgresql use the below config scheme
-//config.job = {client : "pg" , host : "host name", user : "user" , password : "pwd" , name : "db_name" }; 
+//config.job = {client : "pg" , host : "host name", user : "user" , port : 5432 , password : "pwd" , name : "db_name" }; 
 
-//config.pau= {client : "pg" , host : "host name", user : "user" , password : "pwd" , name : "db_name" }; 
+//config.pau= {client : "pg" , host : "host name", user : "user" , port : 5432 ,password : "pwd" , name : "db_name" }; 
 //if sqlite use the scheme belowe
 config.job = {client : "sqlite3", name : "test/test_DB_job"};
 config.pau = {client : "sqlite3", name : "test/test_DB_pau"};
