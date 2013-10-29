@@ -38,6 +38,43 @@ module.exports.qc_list = function(req, res){
 		res.send(val);
 		});
 	};
+	
+module.exports.prod_list = function(req, res){
+	
+	query_prod().then (function(val) 
+		{
+		res.send(val);
+		});
+	};	
+	
+// select production jobs list 
+function query_prod(id)
+	{  
+		var deferred = q.defer();
+		db.client_pau("production").select('job_id').then  
+		(
+			function(resp) 
+			{   
+			console.log(resp);
+			var job_ids = new Array();
+			for (var i in resp) {
+					
+					job_ids.push(resp[i].job_id);				
+					}
+					db.client_job("job").select().whereIn('id',job_ids).then(
+					function(resp) {
+					console.log(resp);
+					deferred.resolve(resp);
+					});
+			}, 
+			function(err) 
+			{
+				console.log(err.message);
+			}
+		); 
+	return deferred.promise;
+	}
+	
 // select operative quality_controls as a funciton of job id
 function query_qc_post(id)
 	{  
