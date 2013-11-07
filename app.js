@@ -8,6 +8,7 @@ var express = require('express'),
   routes = require('./routes'),
   api = require('./routes/api'),
   path = require('path'),
+  cors = require('cors'),
   flash = require('connect-flash'),
   passport = require('passport'),
   expressValidator = require('express-validator');
@@ -34,6 +35,7 @@ app.set('view engine', 'jade');
 app.use(express.logger('dev'));
 app.use(express.cookieParser());
 app.use(express.bodyParser());
+app.use(cors());
 app.use(expressValidator());
 app.use(express.methodOverride());
 
