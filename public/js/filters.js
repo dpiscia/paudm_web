@@ -67,10 +67,11 @@ filter('range', function() {
         else
         {
         for (var i=0; i<arrays.length; i++){
-            
-            if (arrays[i].id === parseInt(job_id) || arrays[i].parent_job_id === parseInt(job_id) ) {
-                arrayToReturn.push(arrays[i]);
-                console.log(arrays[i].id);
+            for (var j=0; j<arrays[i].array.length; j++){
+	            if (arrays[i].id === parseInt(job_id) || arrays[i].array[j] === parseInt(job_id) ) {
+	                arrayToReturn.push(arrays[i]);
+	                console.log(arrays[i].id);
+				}
             }
             
         }

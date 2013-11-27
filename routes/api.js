@@ -90,9 +90,8 @@ function query_post(id,all)
 	console.log("entra");
 	if (id === undefined) 
 	{	//select all job with super_id null
-		db.client_job('job as p').
-		join('dependency','p.id', '=' ,'dependency.child_job_id', 'left').select(db.client_job.raw('*, (select count(*)  from job a where a.super_id = p.id) as nbr')).whereNull('p.super_id').then
-		(query.quality_control).then(deferred.resolve, console.log);	
+db.client_job('job as p').select(db.client_job.raw('*, array (select parent_job_id from dependency where child_job_id = p.id), (select count(*)  from job a where a.super_id = p.id) as nbr')).whereNull('p.super_id').then
+		(query.quality_control).then(deferred.resolve, console.log);		
 	}
 	else 
 	{
