@@ -21,6 +21,8 @@ function mod_chart_status(data_obj) {
 
   return data_tmp;	
 }
+
+
 function mod_chart_task(data_obj) {
 	//return data in json format and groupeb by status, ready to be fed into the d3 plots
   var hist = {};

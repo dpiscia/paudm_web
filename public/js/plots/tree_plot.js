@@ -2,7 +2,7 @@
 
 /* jshint -W117 */
 
-
+var createSVG_classical_tree;
 createSVG_classical_tree = function(scope, element) {
   scope.w = 260;
   scope.h = 900;
